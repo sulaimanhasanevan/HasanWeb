@@ -1,17 +1,7 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink, Github, Mail, Phone, MapPin, Menu, X, ArrowRight } from 'lucide-react';
-import codingWizard from '../assets/Images/codingwizard.png'
 import { Link } from "react-router-dom";
-import resumePDF from "../assets/files/sulaimanresume.pdf";
 
-// Import your technology icons
-import htmlIcon from '../assets/icon/html.png'; // or .svg
-import tailwindIcon from '../assets/icon/tailwind.png'; // or .svg
-import javascriptIcon from '../assets/icon/javascript.png'; // or .svg
-import reactIcon from '../assets/icon/react.png'; // or .svg
-import phpIcon from '../assets/icon/php.png'; // or .svg
-import wordpressIcon from '../assets/icon/wordpress.png'; // or .svg
-import springBootIcon from '../assets/icon/springboot.png'; // or .svg
 
 const HeroSection = () => {
   const technologies = [
@@ -20,49 +10,49 @@ const HeroSection = () => {
       color: 'from-orange-400 to-orange-600', 
       bgColor: 'bg-orange-500/20', 
       shadow: 'shadow-orange-500/50', 
-      icon: htmlIcon // Use imported image
+      icon: 'icons/html.png' // Use imported image
     },
     { 
       name: 'Tailwind', 
       color: 'from-cyan-400 to-cyan-600', 
       bgColor: 'bg-cyan-500/20', 
       shadow: 'shadow-cyan-500/50', 
-      icon: tailwindIcon 
+      icon: '/icons/tailwind.png' 
     },
     { 
       name: 'JavaScript', 
       color: 'from-yellow-400 to-yellow-600', 
       bgColor: 'bg-yellow-500/20', 
       shadow: 'shadow-yellow-500/50', 
-      icon: javascriptIcon 
+      icon: "/icons/javascript.png" 
     },
     { 
       name: 'React', 
       color: 'from-blue-400 to-blue-600', 
       bgColor: 'bg-blue-500/20', 
       shadow: 'shadow-blue-500/50', 
-      icon: reactIcon 
+      icon: "/icons/react.png" 
     },
     { 
       name: 'PHP', 
       color: 'from-purple-400 to-purple-600', 
       bgColor: 'bg-purple-500/20', 
       shadow: 'shadow-purple-500/50', 
-      icon: phpIcon 
+      icon: '/icons/php.png' 
     },
     { 
       name: 'WordPress', 
       color: 'from-blue-600 to-blue-800', 
       bgColor: 'bg-blue-600/20', 
       shadow: 'shadow-blue-600/50', 
-      icon: wordpressIcon 
+      icon: '/icons/wordpress.png' 
     },
     { 
       name: 'Spring Boot', 
       color: 'from-green-400 to-green-600', 
       bgColor: 'bg-green-500/20', 
       shadow: 'shadow-green-500/50', 
-      icon: springBootIcon 
+      icon: '/icons/springboot.png' 
     }
   ];
 
@@ -108,8 +98,8 @@ const HeroSection = () => {
                 View My Work
               </Link>
               <a 
-                href={resumePDF} 
-                download="Sulaiman_E_Resume.pdf"
+                href="/file/sulaimanresume.pdf" 
+                download="sulaimanresume.pdf"
                 className="border border-sky-400 text-sky-400 hover:bg-sky-400 hover:text-gray-900 px-8 py-3 rounded-lg transition-colors font-medium text-lg"
               >
                 Download Resume
@@ -123,7 +113,7 @@ const HeroSection = () => {
               {/* Central placeholder circle */}
               <div className={`${config.containerWidth} ${config.containerHeight} bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full flex items-center justify-center border border-indigo-500/30 backdrop-blur-sm`}>
                 <img 
-                  src={codingWizard} 
+                  src="/image/codingwizard.png" 
                   alt="Coding Wizard" 
                   style={{
                     maxWidth: config.centralImageMaxWidth,

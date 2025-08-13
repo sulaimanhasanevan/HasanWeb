@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Pin, X } from 'lucide-react';
-import compassIcon from '../assets/Icon/compass.svg';
 const EasyNav = ({ navItems = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
@@ -68,7 +67,7 @@ const EasyNav = ({ navItems = [] }) => {
             {/* SVG Icon */}
             <div className="absolute inset-0 flex items-center justify-center">
 <img
-  src={compassIcon}
+  src="/icons/compass.svg"
   alt="navigator"
 />
 

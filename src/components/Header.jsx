@@ -1,6 +1,6 @@
 import React, { useState,} from 'react';
 import { Menu, X } from 'lucide-react';
-import logo from '../assets/logo/hasanweb.png'
+
 
 
 const Header = () => {
@@ -12,7 +12,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           <div className="text-2xl font-bold text-indigo-400">
             <a href='/'>
-<img src={logo} alt="HasanWeb" style={{width: '200px'}} />
+<img src='logos/HasanWeb.png' alt="HasanWeb" style={{width: '200px'}} />
             </a>
           </div>
           
