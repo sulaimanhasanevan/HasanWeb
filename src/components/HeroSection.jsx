@@ -2,7 +2,7 @@ import React from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink, Github, Mail, Phone, MapPin, Menu, X, ArrowRight } from 'lucide-react';
 import codingWizard from '../assets/Images/coding_wizard.png'
 import { Link } from "react-router-dom";
-import resumePDF from "../assets/files/SulaimanE_Rsume.pdf";
+import resumePDF from "../assets/files/sulaimanersume.pdf";
 
 // Import your technology icons
 import htmlIcon from '../assets/icon/html.png'; // or .svg
