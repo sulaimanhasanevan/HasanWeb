@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink, Github, Mail, Phone, MapPin, Menu, X, ArrowRight } from 'lucide-react';
-import codingWizard from '../assets/Images/coding_wizard.png'
+import codingWizard from '../assets/Images/codingwizard.png'
 import { Link } from "react-router-dom";
 import resumePDF from "../assets/files/sulaimanersume.pdf";
 
