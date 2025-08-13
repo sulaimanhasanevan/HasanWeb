@@ -7,8 +7,8 @@ const Projects = () => {
     {
       id: 1,
       name: "E-commerce Website",
-      category: ["Frontend", "Backend"],
-      mainTech: ["Wordpress", "React Js"],
+      category: ["Wordpress", "React Js"], // Added category property
+      technologies: "WordPress, Elementor, WooCommerce, PHP, MySQL, JavaScript, CSS3, HTML5", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+1+Image+1",
         "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+1+Image+2",
@@ -22,8 +22,8 @@ const Projects = () => {
     {
       id: 2,
       name: "Portfolio Website",
-      category: ["Frontend"],
-      mainTech: ["React Js"],
+      category: ["Wordpress"],
+      technologies: "React.js, TypeScript, Tailwind CSS, Framer Motion, Next.js, Vercel", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+2+Image+1",
         "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+2+Image+2",
@@ -37,8 +37,8 @@ const Projects = () => {
     {
       id: 3,
       name: "Blog Management System",
-      category: ["Backend"],
-      mainTech: ["Wordpress"],
+      category: ["React Js"],
+      technologies: "WordPress, Custom PHP, Advanced Custom Fields, Yoast SEO, WP Rocket", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+3+Image+1",
         "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+3+Image+2",
@@ -52,8 +52,8 @@ const Projects = () => {
     {
       id: 4,
       name: "Task Management App",
-      category: ["Frontend", "Backend"],
-      mainTech: ["Java", "React Js"],
+      category: ["Wordpress", "React Js"],
+      technologies: "React.js, Java Spring Boot, PostgreSQL, Redis, Docker, AWS", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+4+Image+1",
         "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+4+Image+2",
@@ -67,8 +67,8 @@ const Projects = () => {
     {
       id: 5,
       name: "Restaurant Website",
-      category: ["Frontend", "Databases"],
-      mainTech: ["Wordpress", "Java"],
+      category: ["Wordpress", "Java"],
+      technologies: "WordPress, Elementor Pro, OpenTable API, PayPal Integration, Google Maps API", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+5+Image+1",
         "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+5+Image+2",
@@ -82,8 +82,8 @@ const Projects = () => {
     {
       id: 6,
       name: "Weather Dashboard",
-      category: ["Frontend"],
-      mainTech: ["React Js"],
+      category: ["Wordpress"],
+      technologies: "React.js, Chart.js, OpenWeatherMap API, Material-UI, Progressive Web App", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+6+Image+1",
         "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+6+Image+2",
@@ -97,8 +97,8 @@ const Projects = () => {
     {
       id: 7,
       name: "Learning Management System",
-      category: ["Backend", "Databases"],
-      mainTech: ["Java"],
+      category: ["React Js", "Java"],
+      technologies: "Java Spring Framework, Hibernate, MySQL, Apache Kafka, Elasticsearch", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+7+Image+1",
         "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+7+Image+2",
@@ -112,8 +112,8 @@ const Projects = () => {
     {
       id: 8,
       name: "Social Media Dashboard",
-      category: ["Frontend", "Backend"],
-      mainTech: ["React Js", "Java"],
+      category: ["Wordpress", "React Js"],
+      technologies: "React.js, Node.js, MongoDB, Socket.io, Express.js, JWT Authentication", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+8+Image+1",
         "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+8+Image+2",
@@ -127,8 +127,8 @@ const Projects = () => {
     {
       id: 9,
       name: "Corporate Website",
-      category: ["Frontend"],
-      mainTech: ["Wordpress"],
+      category: ["Wordpress"],
+      technologies: "WordPress, Divi Theme, Custom CSS, Google Analytics, Contact Form 7", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+9+Image+1",
         "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+9+Image+2",
@@ -142,8 +142,8 @@ const Projects = () => {
     {
       id: 10,
       name: "Mobile Banking App",
-      category: ["Frontend", "Backend", "Databases"],
-      mainTech: ["Java", "React Js"],
+      category: ["Wordpress", "React Js", "Java"],
+      technologies: "React Native, Java Spring Security, Oracle Database, Microservices, Kubernetes", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+10+Image+1",
         "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+10+Image+2",
@@ -157,8 +157,8 @@ const Projects = () => {
     {
       id: 11,
       name: "Inventory System",
-      category: ["Backend", "Databases"],
-      mainTech: ["Java"],
+      category: ["React Js", "Java"],
+      technologies: "Java EE, JPA/Hibernate, PostgreSQL, Apache Maven, JUnit Testing", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+11+Image+1",
         "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+11+Image+2",
@@ -172,8 +172,8 @@ const Projects = () => {
     {
       id: 12,
       name: "News Portal",
-      category: ["Frontend", "Backend"],
-      mainTech: ["Wordpress", "React Js"],
+      category: ["Wordpress", "React Js"],
+      technologies: "WordPress, React.js, REST API, Redis Caching, Cloudflare CDN", // Display technologies
       images: [
         "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+12+Image+1",
         "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+12+Image+2",
@@ -202,22 +202,25 @@ const Projects = () => {
     setProjectImageIndex(initialIndices);
   }, []);
 
-  // Get unique categories from all projects
+  // Get unique categories from all projects with safety check
   const allCategories = useMemo(() => {
     const categorySet = new Set();
     allProjects.forEach(project => {
-      project.category.forEach(cat => categorySet.add(cat));
+      // Safety check: ensure project.category exists and is an array
+      if (project.category && Array.isArray(project.category)) {
+        project.category.forEach(cat => categorySet.add(cat));
+      }
     });
     return ['All', ...Array.from(categorySet)];
   }, [allProjects]);
 
-  // Filter projects based on selected filter
+  // Filter projects based on selected filter with safety check
   const filteredProjects = useMemo(() => {
     if (selectedFilter === 'All') {
       return allProjects;
     }
     return allProjects.filter(project => 
-      project.category.includes(selectedFilter)
+      project.category && Array.isArray(project.category) && project.category.includes(selectedFilter)
     );
   }, [selectedFilter, allProjects]);
 
@@ -272,7 +275,7 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#101828' }}>
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-none mx-auto px-4 py-12" style={{ maxWidth: '1450px' }}>
         {/* Heading */}
         <h1 className="text-4xl font-bold text-center mb-12" style={{ color: '#e5e7eb' }}>
           Projects
@@ -378,22 +381,14 @@ const Projects = () => {
                     {project.name}
                   </h3>
 
-                  {/* Tech Stack */}
+                  {/* Technologies Used (Display only) */}
                   <div className="mb-4">
                     <span className="text-sm font-medium" style={{ color: '#9ca3af' }}>
-                      Tech Used: 
+                      Technologies: 
                     </span>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {project.mainTech.map((tech, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 text-xs rounded-full"
-                          style={{ backgroundColor: '#6366f1', color: '#ffffff' }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-sm mt-1 leading-relaxed" style={{ color: '#e5e7eb' }}>
+                      {project.technologies}
+                    </p>
                   </div>
 
                   {/* Project Links */}
@@ -432,7 +427,7 @@ const Projects = () => {
 
                   {/* Description */}
                   <div className="flex-1">
-                    <p className="text-lg leading-relaxed font-medium" style={{ color: '#ffffff' }}>
+                    <p className="text-base leading-relaxed font-normal" style={{ color: '#ffffff' }}>
                       {shouldShowReadMore && !isExpanded ? displayDescription + '...' : displayDescription}
                     </p>
                     
