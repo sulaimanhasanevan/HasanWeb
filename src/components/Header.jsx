@@ -12,7 +12,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           <div className="text-2xl font-bold text-indigo-400">
             <a href='/'>
-<img src='logos/HasanWeb.png' alt="HasanWeb" style={{width: '200px'}} />
+<img src='/logos/HasanWeb.png' alt="HasanWeb" style={{width: '200px'}} />
             </a>
           </div>
           
