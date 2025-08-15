@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Left Side - Logo and Description */}
           <div className="text-center md:text-left">
                         <a href='/'>
-            <img src='/logos/HasanWeb.png' alt="HasanWeb" style={{width: '200px'}} />
+            <img src='/logos/hasanweb.png' alt="HasanWeb" style={{width: '200px'}} />
                         </a>
             <p className="text-gray-400 mb-6 mt-[20px] max-w-md">
               From code to clicks. We build, automate, and innovate your web success.
