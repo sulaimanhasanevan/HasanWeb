@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Mail, Phone, CheckCircle, AlertCircle, Send } from 'lucide-react';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const captchaRef = useRef();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -14,6 +17,27 @@ const ContactSection = () => {
     }
   };
 
+  const handleCaptchaVerify = (token) => {
+    setCaptchaToken(token);
+    // Clear any existing error status when captcha is verified
+    if (status.type === 'error') {
+      setStatus({ type: '', message: '' });
+    }
+  };
+
+  const handleCaptchaExpire = () => {
+    setCaptchaToken(null);
+  };
+
+  const handleCaptchaError = (err) => {
+    console.error('hCaptcha Error:', err);
+    setCaptchaToken(null);
+    setStatus({ 
+      type: 'error', 
+      message: 'Captcha verification failed. Please try again.' 
+    });
+  };
+
   const validateForm = () => {
     if (!form.name.trim()) return "Please enter your name";
     if (!form.email.trim()) return "Please enter your email";
@@ -21,6 +45,8 @@ const ContactSection = () => {
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.email)) return "Please enter a valid email";
+    
+    if (!captchaToken) return "Please complete the captcha verification";
     
     return null;
   };
@@ -37,7 +63,12 @@ const ContactSection = () => {
 
     try {
       console.log('Attempting to send message to server...');
-      console.log('Form data:', { name: form.name, email: form.email, message: form.message });
+      console.log('Form data:', { 
+        name: form.name, 
+        email: form.email, 
+        message: form.message,
+        captchaToken: captchaToken 
+      });
       
       const response = await fetch('http://localhost:5000/send', {
         method: 'POST',
@@ -47,7 +78,8 @@ const ContactSection = () => {
         body: JSON.stringify({
           name: form.name,
           email: form.email,
-          message: form.message
+          message: form.message,
+          captchaToken: captchaToken
         })
       });
 
@@ -67,6 +99,11 @@ const ContactSection = () => {
           message: 'Message sent successfully! I\'ll get back to you soon.' 
         });
         setForm({ name: '', email: '', message: '' });
+        setCaptchaToken(null);
+        // Reset the captcha
+        if (captchaRef.current) {
+          captchaRef.current.resetCaptcha();
+        }
       } else {
         throw new Error(data.message || 'Server returned unsuccessful response');
       }
@@ -92,6 +129,12 @@ const ContactSection = () => {
         type: 'error', 
         message: errorMessage
       });
+
+      // Reset captcha on error
+      setCaptchaToken(null);
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+      }
     } finally {
       setIsLoading(false);
     }
@@ -143,7 +186,7 @@ const ContactSection = () => {
               <div>
                 <h3 className="text-lg font-semibold text-gray-100">Phone</h3>
                 <a 
-                  href="tel:+8801234567890"
+                  href="tel:+8801400311710"
                   className="text-gray-400 hover:text-indigo-400 transition-colors"
                 >
                   +880 1400311710
@@ -169,8 +212,7 @@ const ContactSection = () => {
                 </a>
               </div>
             </div>
-
-            </div>
+          </div>
 
           {/* Contact Form */}
           <div className="space-y-6">
@@ -219,14 +261,32 @@ const ContactSection = () => {
               ></textarea>
             </div>
             
+            {/* hCaptcha */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Security Verification *
+              </label>
+              <div className="flex justify-center">
+                <HCaptcha
+                  ref={captchaRef}
+                  sitekey="95f0f6f4-0a9c-4bbc-b9d6-9296830ebe52"
+                  onVerify={handleCaptchaVerify}
+                  onExpire={handleCaptchaExpire}
+                  onError={handleCaptchaError}
+                  theme="dark"
+                />
+              </div>
+            </div>
+            
             <button
               className={`w-full py-4 rounded-lg font-semibold text-lg transition-all duration-200 flex items-center justify-center space-x-3 ${
-                isLoading 
-                  ? 'bg-gray-600 cursor-not-allowed' 
+                isLoading || !captchaToken
+                  ? 'bg-gray-600 cursor-not-allowed opacity-60' 
                   : 'bg-gradient-to-r from-lime-500 to-lime-400 hover:from-lime-400 hover:to-lime-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-lime-500/25'
               } text-gray-900`}
               onClick={handleSubmit}
-              disabled={isLoading}
+              disabled={isLoading || !captchaToken}
+              title={!captchaToken ? 'Please complete the captcha verification first' : ''}
             >
               {isLoading ? (
                 <>
