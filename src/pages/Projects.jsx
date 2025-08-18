@@ -1,10 +1,10 @@
 import Header from '../components/Header';
-import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import MyProject from '../components/Projects';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import EasyNav from '../components/EasyNav';
+import SimpleHeroSection from '../components/SimpleHeroSection';
 
 const Projects= () => {
   // Define navigation items for your portfolio
@@ -25,7 +25,9 @@ const Projects= () => {
       </div>
       
       <div id="hero">
-        <HeroSection />
+       <SimpleHeroSection 
+  pageName="Projects" 
+/>
       </div>
       
       <div id="about">

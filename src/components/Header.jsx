@@ -20,7 +20,7 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="/about" className="text-gray-300 hover:text-sky-400 transition-colors">About</a>
             <a href="/contact" className="text-gray-300 hover:text-sky-400 transition-colors">Contact</a>
-            <a href="/blog" className="text-gray-300 hover:text-sky-400 transition-colors">Blog</a>
+            <a href="/blogs" className="text-gray-300 hover:text-sky-400 transition-colors">Blogs</a>
 <a 
   href="/projects" 
   className="bg-lime-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-lime-400 transition-colors font-medium inline-block text-center no-underline"

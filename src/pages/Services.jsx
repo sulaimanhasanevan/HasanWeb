@@ -25,7 +25,9 @@ const Services = () => {
       </div>
       
       <div id="hero">
-        <HeroSection />
+        <SimpleHeroSection 
+  pageName="Services" 
+/>
       </div>
       
       <div id="about">

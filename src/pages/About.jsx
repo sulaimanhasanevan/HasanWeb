@@ -1,5 +1,4 @@
 import Header from '../components/Header';
-import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import Experience from '../components/Experience';
 import ContactSection from '../components/ContactSection';
@@ -26,9 +25,11 @@ const About = () => {
       </div>
       
       <div id="hero">
-        <SimpleHeroSection 
+<SimpleHeroSection 
   pageName="About" 
 />
+
+
       </div>
       
       <div id="about">

@@ -2,44 +2,13 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const SimpleHeroSection = ({ 
-  pageName = "Page Name", 
-  desktopBg = null, 
-  mobileBg = null 
+  pageName = "Page Name"
 }) => {
   return (
     <section className="relative h-[500px] w-full flex flex-col justify-center items-center overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background with gradient */}
       <div className="absolute inset-0 z-0">
-        {/* Desktop Background */}
-        {desktopBg && (
-          <div 
-            className="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${desktopBg})`,
-            }}
-          ></div>
-        )}
-        
-        {/* Mobile Background */}
-        {mobileBg && (
-          <div 
-            className="block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${mobileBg})`,
-            }}
-          ></div>
-        )}
-        
-        {/* Fallback background if no images provided */}
-        {!desktopBg && !mobileBg && (
-          <div className="absolute inset-0 bg-[#1f2937]"></div>
-        )}
-        
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-[#0d0d0d]/75"></div>
-        
-        {/* Blue accent overlay with opacity */}
-        <div className="absolute inset-0 bg-[#00bcff]/25"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 to-purple-900/20"></div>
       </div>
 
       {/* Content Container */}
@@ -47,7 +16,7 @@ const SimpleHeroSection = ({
         
         {/* Main Header - Perfectly Centered */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-[#e5e7eb] text-center">
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent text-center pb-[10px]">
             {pageName}
           </h1>
         </div>

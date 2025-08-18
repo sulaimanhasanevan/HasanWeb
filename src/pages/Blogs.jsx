@@ -1,18 +1,14 @@
 import Header from '../components/Header';
-import HeroSection from '../components/HeroSection';
-import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import EasyNav from '../components/EasyNav';
 import SimpleHeroSection from '../components/SimpleHeroSection';
 
-const Contact = () => {
+const About = () => {
   // Define navigation items for your portfolio
   const homeNavItems = [
     { name: 'Header', id: 'header', color: '#00bcff' },
     { name: 'Hero', id: 'hero', color: '#00bcff' },
-    { name: 'About', id: 'about', color: '#00bcff' },
-    { name: 'Projects', id: 'projects', color: '#00bcff' },
-    { name: 'Contact', id: 'contact', color: '#00bcff' },
+    { name: 'Blogs', id: 'blogs', color: '#00bcff' },
     { name: 'Footer', id: 'footer', color: '#00bcff' }
   ];
 
@@ -24,19 +20,22 @@ const Contact = () => {
       </div>
       
       <div id="hero">
-        <SimpleHeroSection 
-  pageName="Contact Us" 
+<SimpleHeroSection 
+  pageName="Blogs" 
 />
-      </div>
+</div>      
+      <dvi id="blogs">
+<div className="bg-[#1d2839] py-12 border-t border-gray-700 h-[500px] flex items-center justify-center">
+  <h2 className="text-white text-2xl font-semibold">
+    Blogs are not available right now
+  </h2>
+</div>
+
+      </dvi>
       
-      
-      <div id="contact">
-        <ContactSection />
-      </div>
-      
-      <div id="footer">
-        <Footer />
-      </div>
+<div id="footer">
+<Footer />
+</div>
       
       {/* EasyNav Component with navigation items */}
       <EasyNav navItems={homeNavItems} />
@@ -44,4 +43,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default About;
