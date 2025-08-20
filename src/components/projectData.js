@@ -2,18 +2,18 @@
 export const allProjects = [
   {
     id: 1,
-    name: "E-commerce Website",
-    category: ["Wordpress", "React Js"],
+    name: "GEOTREK",
+    category: ["Wordpress"],
     technologies: "WordPress, Elementor, WooCommerce, PHP, MySQL, JavaScript, CSS3, HTML5",
     images: [
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+1+Image+1",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+1+Image+2",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+1+Image+3",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+1+Image+4"
+      "/projects/geotrekvans/geotrekvans-cover.webp",
+      "/projects/geotrekvans/geotrekvans-image-2.webp",
+      "/projects/geotrekvans/geotrekvans-image-3.webp",
+      "/projects/geotrekvans/geotrekvans-image-4.webp"
     ],
-    projectLink: "https://example.com",
-    githubLink: "https://github.com/example",
-    description: "A comprehensive e-commerce platform featuring modern design principles, responsive layout across all devices, advanced product catalog with filtering and search capabilities, secure shopping cart functionality, integrated payment gateway, user account management, order tracking system, admin dashboard for inventory management, SEO optimization, and performance analytics to drive business growth and enhance user experience."
+    projectLink: "https://geotrekvans.com ",
+    githubLink: "",
+    description: ""
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ export const allProjects = [
   {
     id: 3,
     name: "Blog Management System",
-    category: ["React Js"],
+    category: ["Wordpress"],
     technologies: "WordPress, Custom PHP, Advanced Custom Fields, Yoast SEO, WP Rocket",
     images: [
       "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+3+Image+1",
@@ -41,8 +41,8 @@ export const allProjects = [
       "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+3+Image+3",
       "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+3+Image+4"
     ],
-    projectLink: "",
-    githubLink: "https://github.com/blog-example",
+    projectLink: "https://www.lafayette-miami.com/",
+    githubLink: "",
     description: "Custom WordPress theme with advanced blog management features including content scheduling, multi-author support, SEO optimization tools, custom post types, advanced commenting system, social media integration, newsletter subscriptions, analytics dashboard, backup solutions, security enhancements, and user-friendly admin interface for seamless content management and publishing workflows."
   },
   {
