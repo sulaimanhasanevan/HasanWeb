@@ -17,78 +17,78 @@ export const allProjects = [
   },
   {
     id: 2,
-    name: "Portfolio Website",
+    name: "Anchor Harvey",
     category: ["Wordpress"],
-    technologies: "React.js, TypeScript, Tailwind CSS, Framer Motion, Next.js, Vercel",
+    technologies: "WordPress, Avada, Fushion Builder, ACF,  PHP, MySQL, JavaScript, CSS3",
     images: [
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+2+Image+1",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+2+Image+2",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+2+Image+3",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+2+Image+4"
+      "/projects/anchorharvey/anchorharvey-cover.webp",
+      "/projects/anchorharvey/anchorharvey-image-2.webp",
+      "/projects/anchorharvey/anchorharvey-image-3.webp",
+      "/projects/anchorharvey/anchorharvey-image-4.webp"
     ],
-    projectLink: "https://portfolio.example.com",
+    projectLink: "https://anchorharvey.com",
     githubLink: "",
-    description: "Personal portfolio website showcasing professional projects, technical skills, and career achievements with smooth animations, modern UI components, interactive elements, responsive design for all devices, contact forms, blog integration, project galleries, skills visualization, testimonials section, and optimized performance for fast loading across all platforms and browsers worldwide."
+    description: ""
   },
   {
     id: 3,
-    name: "Blog Management System",
+    name: "lafayette-miami",
     category: ["Wordpress"],
-    technologies: "WordPress, Custom PHP, Advanced Custom Fields, Yoast SEO, WP Rocket",
+    technologies: "WordPress, Elementor, WooCommerce, PHP, MySQL, JavaScript, CSS3, HTML5",
     images: [
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+3+Image+1",
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+3+Image+2",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+3+Image+3",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+3+Image+4"
+      "/projects/lafayette/lafayette-cover.webp",
+      "/projects/lafayette/lafayette-image-2.webp",
+      "/projects/lafayette/lafayette-image-3.webp",
+      "/projects/lafayette/lafayette-image-4.webp"
     ],
     projectLink: "https://www.lafayette-miami.com/",
     githubLink: "",
-    description: "Custom WordPress theme with advanced blog management features including content scheduling, multi-author support, SEO optimization tools, custom post types, advanced commenting system, social media integration, newsletter subscriptions, analytics dashboard, backup solutions, security enhancements, and user-friendly admin interface for seamless content management and publishing workflows."
+    description: ""
   },
   {
     id: 4,
-    name: "Task Management App",
-    category: ["Wordpress", "React Js"],
+    name: "Lexco Cable",
+    category: ["Wordpress",],
     technologies: "React.js, Java Spring Boot, PostgreSQL, Redis, Docker, AWS",
     images: [
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+4+Image+1",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+4+Image+2",
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+4+Image+3",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+4+Image+4"
+      "/projects/lexcocable/lexcocable-cover.webp",
+      "/projects/lexcocable/lexcocable-image-2.webp",
+      "/projects/lexcocable/lexcocable-image-3.webp",
+      "/projects/lexcocable/lexcocable-image-4.webp"
     ],
-    projectLink: "https://taskapp.example.com",
-    githubLink: "https://github.com/taskapp",
-    description: "Full-stack task management application with real-time updates, team collaboration features, intuitive drag-and-drop interface, project timeline visualization, resource allocation tools, automated notifications, progress tracking, file attachment support, time logging capabilities, reporting and analytics, integration with popular tools, and mobile-responsive design for productivity on any device."
+    projectLink: "https://lexcocable.com",
+    githubLink: "",
+    description: ""
   },
   {
     id: 5,
-    name: "Restaurant Website",
+    name: "tapestry of africa",
     category: ["Wordpress", "Java"],
     technologies: "WordPress, Elementor Pro, OpenTable API, PayPal Integration, Google Maps API",
     images: [
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+5+Image+1",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+5+Image+2",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+5+Image+3",
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+5+Image+4"
+      "/projects/tapestryofafrica/tapestryofafrica-cover.webp",
+      "/projects/tapestryofafrica/tapestryofafrica-image-2.webp",
+      "/projects/tapestryofafrica/tapestryofafrica-image-3.webp",
+      "/projects/tapestryofafrica/tapestryofafrica-image-4.webp"
     ],
-    projectLink: "https://restaurant.example.com",
+    projectLink: "https://tapestryofafrica.com",
     githubLink: "",
-    description: "Modern restaurant website featuring online reservation system with real-time availability, digital menu showcase with high-quality imagery, integrated payment processing, customer review management, loyalty program integration, event booking capabilities, catering service information, location mapping, social media feeds, newsletter subscriptions, and mobile-optimized ordering system for enhanced customer experience."
+    description: ""
   },
   {
     id: 6,
-    name: "Weather Dashboard",
+    name: "Rome Grinding Solutions",
     category: ["Wordpress"],
     technologies: "React.js, Chart.js, OpenWeatherMap API, Material-UI, Progressive Web App",
     images: [
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+6+Image+1",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+6+Image+2",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+6+Image+3",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+6+Image+4"
+      "/projects/romegrindingsolutions/romegrindingsolutions-cover.webp",
+      "/projects/romegrindingsolutions/romegrindingsolutions-image-2.webp",
+      "/projects/romegrindingsolutions/romegrindingsolutions-image-3.webp",
+      "/projects/romegrindingsolutions/romegrindingsolutions-image-4.webp"
     ],
-    projectLink: "https://weather.example.com",
-    githubLink: "https://github.com/weather-dashboard",
-    description: "Interactive weather dashboard providing real-time weather data, detailed forecasts, beautiful data visualizations, location-based services, historical weather patterns, severe weather alerts, UV index monitoring, air quality information, sunrise and sunset times, wind patterns analysis, precipitation tracking, and customizable widgets for personalized weather monitoring experience."
+    projectLink: "romegrindingsolutions.com",
+    githubLink: "",
+    description: ""
   },
   {
     id: 7,
@@ -103,7 +103,7 @@ export const allProjects = [
     ],
     projectLink: "",
     githubLink: "https://github.com/lms-java",
-    description: "Comprehensive learning management system with advanced course management capabilities, student progress tracking, interactive assessment tools, multimedia content support, discussion forums, assignment submission system, grading workflows, certificate generation, attendance monitoring, parent-teacher communication, learning analytics, mobile compatibility, and scalable architecture for educational institutions."
+    description: ""
   },
   {
     id: 8,
