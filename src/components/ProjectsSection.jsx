@@ -169,6 +169,8 @@ const ProjectsSection = () => {
                                 <a
                                   href={project.liveUrl}
                                   className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors inline-flex items-center text-sm"
+                                    target="_blank" 
+                                     rel="noopener noreferrer"
                                 >
                                   <ExternalLink size={14} className="mr-1" />
                                   Live Demo
