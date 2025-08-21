@@ -57,7 +57,7 @@ const ProjectsSection = () => {
       description: 'Rome Grinding Solutions, a fourth-generation family-owned company in Iowa',
       image: '/projects/romegrindingsolutions/romegrindingsolutions-cover.webp',
       technologies: ['WordPress', 'Avada', 'Fushion Builder', 'ACF',  'PHP'],
-      liveUrl: 'romegrindingsolutions.com',
+      liveUrl: 'https://romegrindingsolutions.com',
       githubUrl: '#'
     }
   ];
