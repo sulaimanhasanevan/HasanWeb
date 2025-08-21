@@ -107,33 +107,33 @@ export const allProjects = [
   },
   {
     id: 8,
-    name: "Social Media Dashboard",
-    category: ["Wordpress", "React Js"],
-    technologies: "React.js, Node.js, MongoDB, Socket.io, Express.js, JWT Authentication",
+    name: "Apex Property Maintenance – Facility Maintenance Services",
+    category: ["Wordpress"],
+    technologies: "Wordpress, Elementor, ALL In One SEO, PHP, JavaScript",
     images: [
       "/projects/apexpmcs/apexpmcs-cover.webp",
       "/projects/apexpmcs/apexpmcs-image-2.webp",
       "/projects/apexpmcs/apexpmcs-image-3.webp",
       "/projects/apexpmcs/apexpmcs-image-4.webp"
     ],
-    projectLink: "https://social.example.com",
-    githubLink: "https://github.com/social-dashboard",
-    description: ""
+    projectLink: "https://apexpmcs.com/",
+    githubLink: "",
+    description: "Developed a professional WordPress website for Apex Property Maintenance, a company specializing in commercial facility maintenance and repair. Built with Elementor and enhanced through custom PHP and JavaScript, the site showcases Apex’s mission, services, leadership, and achievements in a clear, engaging format. Optimized for performance and SEO, the platform communicates trust, reliability, and customer-focused value, positioning Apex as a leader in the facility maintenance industry."
   },
   {
     id: 9,
-    name: "Corporate Website",
+    name: "Forcemech – Premium Portable Mobility Solutions",
     category: ["Wordpress"],
-    technologies: "WordPress, Divi Theme, Custom CSS, Google Analytics, Contact Form 7",
+    technologies: "WordPress, Elementor, All In One SEO, WooCommerce, PhotoSwipe",
     images: [
       "/projects/forcemech/forcemech-cover.webp",
       "/projects/forcemech/forcemech-image-2.webp",
       "/projects/forcemech/forcemech-image-3.webp",
       "/projects/forcemech/forcemech-image-4.webp"
     ],
-    projectLink: "https://corporate.example.com",
+    projectLink: "https://forcemech.com/",
     githubLink: "",
-    description: ""
+    description: "Designed and developed a WordPress website for Forcemech, a leading brand in portable mobility devices. Using Elementor and WooCommerce, I created a responsive platform for showcasing and selling products, complete with immersive photo galleries and optimized product pages. The site highlights Forcemech’s mission of innovation and customer empowerment while ensuring a smooth browsing and purchasing experience."
   },
   {
     id: 10,
@@ -167,17 +167,17 @@ export const allProjects = [
   },
   {
     id: 12,
-    name: "News Portal",
-    category: ["Wordpress", "React Js"],
-    technologies: "WordPress, React.js, REST API, Redis Caching, Cloudflare CDN",
+    name: "Hasan Web",
+    category: ["React Js"],
+    technologies: "React Js, GSAP, Tailwind CSS, Vite, Vercel, Lucide-react ",
     images: [
       "/projects/esspi/esspi-cover.webp",
       "/projects/esspi/esspi-image-2.webp",
       "/projects/esspi/esspi-image-3.webp",
       "/projects/esspi/esspi-image-4.webp"
     ],
-    projectLink: "https://news.example.com",
-    githubLink: "https://github.com/news-portal",
+    projectLink: "https://hasanwebs.vercel.app/",
+    githubLink: "https://github.com/sulaimanhasanevan/HasanWeb",
     description: "Dynamic news portal with real-time content updates, categorized news sections, advanced search functionality, user engagement features including comments and ratings, newsletter subscriptions, breaking news alerts, social media integration, multimedia content support, trending topics display, author profiles, advertising management, and mobile-responsive design for news consumption."
   }
 ];
