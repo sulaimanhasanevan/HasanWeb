@@ -137,37 +137,37 @@ export const allProjects = [
   },
   {
     id: 10,
-    name: "Mobile Banking App",
-    category: ["Wordpress", "React Js", "Java"],
-    technologies: "React Native, Java Spring Security, Oracle Database, Microservices, Kubernetes",
+    name: "Wellgistics – Pharmacy Distribution Solutions",
+    category: ["Wordpress"],
+    technologies: "WordPress, Elementor, CloudFlare, All In One SEO, javascript",
     images: [
       "/projects/wellgisticshealth/wellgisticshealth-cover.webp",
       "/projects/wellgisticshealth/wellgisticshealth-image-2.webp",
       "/projects/wellgisticshealth/wellgisticshealth-image-3.webp",
       "/projects/wellgisticshealth/wellgisticshealth-image-4.webp"
     ],
-    projectLink: "https://banking.example.com",
-    githubLink: "https://github.com/banking-app",
-    description: ""
+    projectLink: "https://wellgisticshealth.com",
+    githubLink: "",
+    description: "Developed a WordPress website for Wellgistics, an NABP Authorized Distributor serving independent pharmacies. Built with Elementor and optimized for performance and security, the site emphasizes trust, compliance, and innovation in pharmaceutical reselling. Enhanced with custom JavaScript features and SEO best practices, the platform delivers a professional, reliable online presence aligned with healthcare industry standards."
   },
   {
     id: 11,
-    name: "Inventory System",
-    category: ["React Js", "Java"],
-    technologies: "Java EE, JPA/Hibernate, PostgreSQL, Apache Maven, JUnit Testing",
+    name: "Big Blue Innovations – Business & Technology Consulting",
+    category: ["Wordpress"],
+    technologies: "WordPress, Elementor, Contact From 7, All In One SEO, javascript",
     images: [
       "/projects/bigblueinnovations/bigblueinnovations-cover.webp",
       "/projects/bigblueinnovations/bigblueinnovations-image-2.webp",
       "/projects/bigblueinnovations/bigblueinnovations-image-3.webp",
       "/projects/bigblueinnovations/bigblueinnovations-image-4.webp"
     ],
-    projectLink: "",
-    githubLink: "https://github.com/inventory-system",
-    description: ""
+    projectLink: "https://bigblueinnovations.com/",
+    githubLink: "",
+    description: "Developed a WordPress website for Big Blue Innovations, a consulting firm focused on business innovation, technology modernization, and action-oriented planning. Using Elementor and custom JavaScript, I created a responsive platform with clear service sections and streamlined lead capture through Contact Form 7. Optimized for SEO and performance, the site presents the firm as a trusted partner in helping businesses modernize, reduce risks, and accelerate performance."
   },
   {
     id: 12,
-    name: "Hasan Web",
+    name: "Hasan Web – Personal Portfolio Website",
     category: ["React Js"],
     technologies: "React Js, GSAP, Tailwind CSS, Vite, Vercel, Lucide-react ",
     images: [
@@ -178,6 +178,6 @@ export const allProjects = [
     ],
     projectLink: "https://hasanwebs.vercel.app/",
     githubLink: "https://github.com/sulaimanhasanevan/HasanWeb",
-    description: "Dynamic news portal with real-time content updates, categorized news sections, advanced search functionality, user engagement features including comments and ratings, newsletter subscriptions, breaking news alerts, social media integration, multimedia content support, trending topics display, author profiles, advertising management, and mobile-responsive design for news consumption."
+    description: "Designed and developed my personal website using React JS, Tailwind CSS, and GSAP to showcase my skills, experience, and projects. Built with Vite and deployed on Vercel, the site features smooth animations, a clean UI, and easy navigation. It also provides multiple contact options, ensuring potential clients and employers can connect with me effortlessly."
   }
 ];
