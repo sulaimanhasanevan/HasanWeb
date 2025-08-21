@@ -2,9 +2,9 @@
 export const allProjects = [
   {
     id: 1,
-    name: "GEOTREK",
+    name: "Geotrek Vans – Custom Camper Van Website",
     category: ["Wordpress"],
-    technologies: "WordPress, Elementor, WooCommerce, PHP, MySQL, JavaScript, CSS3, HTML5",
+    technologies: "WordPress, Elementor, WooCommerce,Interactive Calculator, PHP, MySQL, JavaScript, CSS3",
     images: [
       "/projects/geotrekvans/geotrekvans-cover.webp",
       "/projects/geotrekvans/geotrekvans-image-2.webp",
@@ -13,11 +13,11 @@ export const allProjects = [
     ],
     projectLink: "https://geotrekvans.com ",
     githubLink: "",
-    description: ""
+    description: "Designed and developed a custom website for Geotrek Vans, converting Figma designs into Elementor layouts. The site highlights premium camper vans with an interactive build calculator, seamless product browsing, and a clear call-to-action for van sales and custom builds. Delivered a responsive, user-friendly platform that reflects the brand’s adventurous spirit and craftsmanship."
   },
   {
     id: 2,
-    name: "Anchor Harvey",
+    name: "Anchor Harvey – Forging & Supply Chain Website",
     category: ["Wordpress"],
     technologies: "WordPress, Avada, Fushion Builder, ACF,  PHP, MySQL, JavaScript, CSS3",
     images: [
@@ -28,13 +28,13 @@ export const allProjects = [
     ],
     projectLink: "https://anchorharvey.com",
     githubLink: "",
-    description: ""
+    description: "Developed a corporate website for Anchor Harvey, a leader in forging and machining solutions. Converted Figma designs into Fusion Builder layouts using the Avada theme, ensuring pixel-perfect implementation and responsive design. Built interactive elements with Slider Revolution and enhanced functionality with custom PHP, JavaScript, and ACF integrations. Delivered a professional platform that effectively showcases the company’s services, supply chain expertise, and industry leadership."
   },
   {
     id: 3,
-    name: "lafayette-miami",
+    name: "Lafayette Steakhouse – Miami",
     category: ["Wordpress"],
-    technologies: "WordPress, Elementor, WooCommerce, PHP, MySQL, JavaScript, CSS3, HTML5",
+    technologies: "WordPress, Elementor, WooCommerce,All In One SEO, PHP, MySQL, JavaScript, CSS3",
     images: [
       "/projects/lafayette/lafayette-cover.webp",
       "/projects/lafayette/lafayette-image-2.webp",
@@ -43,13 +43,13 @@ export const allProjects = [
     ],
     projectLink: "https://www.lafayette-miami.com/",
     githubLink: "",
-    description: ""
+    description: "Built a stylish and functional website for Lafayette Miami, blending the nostalgic charm of an all-American steakhouse with the elegance of a London speakeasy. Developed the site in WordPress with Elementor, integrating WooCommerce for online reservations and promotions. Customized layouts with PHP, JavaScript, and CSS to create a seamless, responsive experience that reflects the restaurant’s refined brand identity."
   },
   {
     id: 4,
-    name: "Lexco Cable",
-    category: ["Wordpress",],
-    technologies: "React.js, Java Spring Boot, PostgreSQL, Redis, Docker, AWS",
+    name: "Lexco® Cable – Wire & Cable Assemblies Manufacturer",
+    category: ["Wordpress"],
+    technologies: "WordPress, Avada, Fushion Builder, ACF,  PHP, MySQL, JavaScript, CSS3, HTML",
     images: [
       "/projects/lexcocable/lexcocable-cover.webp",
       "/projects/lexcocable/lexcocable-image-2.webp",
@@ -58,13 +58,13 @@ export const allProjects = [
     ],
     projectLink: "https://lexcocable.com",
     githubLink: "",
-    description: ""
+    description: "Developed a modern corporate website for Lexco® Cable, a leading manufacturer of wire rope and cable assemblies. Converted Figma designs into Fusion Builder layouts using the Avada theme, ensuring accurate design implementation and responsive performance. Integrated ACF for dynamic content management and customized functionality with PHP, JavaScript, and CSS. Delivered a professional platform that highlights Lexco’s manufacturing capabilities and strengthens their online presence."
   },
   {
     id: 5,
-    name: "tapestry of africa",
-    category: ["Wordpress", "Java"],
-    technologies: "WordPress, Elementor Pro, OpenTable API, PayPal Integration, Google Maps API",
+    name: "Tapestry of Africa – Luxury Safari Experiences",
+    category: ["Wordpress"],
+    technologies: "WordPress, Elementor,ALL In One SEO, PhotoSwipe, WooCommerce, PHP",
     images: [
       "/projects/tapestryofafrica/tapestryofafrica-cover.webp",
       "/projects/tapestryofafrica/tapestryofafrica-image-2.webp",
@@ -73,13 +73,13 @@ export const allProjects = [
     ],
     projectLink: "https://tapestryofafrica.com",
     githubLink: "",
-    description: ""
+    description: "Developed a custom WordPress website for Tapestry of Africa, showcasing luxury safari packages across Kenya, Tanzania, and Uganda. Translated brand vision into an engaging online presence with Figma-to-Elementor implementation, immersive photo galleries, and a seamless booking experience. Optimized for responsiveness and SEO, the site highlights both adventure and luxury, making it easy for travelers to explore and plan their journeys."
   },
   {
     id: 6,
-    name: "Rome Grinding Solutions",
+    name: "Rome Grinding Solutions – Food Production Company",
     category: ["Wordpress"],
-    technologies: "React.js, Chart.js, OpenWeatherMap API, Material-UI, Progressive Web App",
+    technologies: "WordPress, Avada, Fushion Builder, ACF,  PHP, MySQL, JavaScript, CSS3",
     images: [
       "/projects/romegrindingsolutions/romegrindingsolutions-cover.webp",
       "/projects/romegrindingsolutions/romegrindingsolutions-image-2.webp",
@@ -88,22 +88,22 @@ export const allProjects = [
     ],
     projectLink: "romegrindingsolutions.com",
     githubLink: "",
-    description: ""
+    description: "Designed and developed a professional WordPress website for Rome Grinding Solutions, a fourth-generation family-owned company in Iowa. Using the Avada theme with Fusion Builder and ACF, I built a customized platform that highlights their patented innovations and industry leadership. Enhanced functionality with PHP, MySQL, and JavaScript, ensuring a responsive design, intuitive navigation, and scalable content management tailored to their brand legacy."
   },
   {
     id: 7,
-    name: "Learning Management System",
-    category: ["React Js", "Java"],
-    technologies: "Java Spring Framework, Hibernate, MySQL, Apache Kafka, Elasticsearch",
+    name: "ESSPI – Energy Safety Storage Products International",
+    category: ["Wordpress"],
+    technologies: "WordPress, Elementor, All In One SEO, PHP, JavaScript",
     images: [
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+7+Image+1",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+7+Image+2",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+7+Image+3",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+7+Image+4"
+      "/projects/esspi/esspi-cover.webp",
+      "/projects/esspi/esspi-image-2.webp",
+      "/projects/esspi/esspi-image-3.webp",
+      "/projects/esspi/esspi-image-4.webp"
     ],
-    projectLink: "",
-    githubLink: "https://github.com/lms-java",
-    description: ""
+    projectLink: "https://esspi.com/",
+    githubLink: "",
+    description: "Developed a custom WordPress website for ESSPI, a company pioneering safety solutions for lithium-ion battery storage and transport. Built with Elementor and enhanced with custom PHP and JavaScript functionality, the site presents ESSPI’s mission, story, and flagship Battery Logistics Integrated Safety System (BLISS) in a compelling, user-friendly format. Focused on clarity, performance, and SEO optimization to position ESSPI as a leader in green energy safety solutions."
   },
   {
     id: 8,
@@ -111,14 +111,14 @@ export const allProjects = [
     category: ["Wordpress", "React Js"],
     technologies: "React.js, Node.js, MongoDB, Socket.io, Express.js, JWT Authentication",
     images: [
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+8+Image+1",
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+8+Image+2",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+8+Image+3",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+8+Image+4"
+      "/projects/apexpmcs/apexpmcs-cover.webp",
+      "/projects/apexpmcs/apexpmcs-image-2.webp",
+      "/projects/apexpmcs/apexpmcs-image-3.webp",
+      "/projects/apexpmcs/apexpmcs-image-4.webp"
     ],
     projectLink: "https://social.example.com",
     githubLink: "https://github.com/social-dashboard",
-    description: "Social media analytics dashboard featuring real-time metrics monitoring, engagement tracking across multiple platforms, performance insights visualization, competitor analysis tools, content scheduling capabilities, automated reporting, audience demographics analysis, hashtag performance tracking, influencer identification, ROI calculation, and comprehensive social media management."
+    description: ""
   },
   {
     id: 9,
@@ -126,14 +126,14 @@ export const allProjects = [
     category: ["Wordpress"],
     technologies: "WordPress, Divi Theme, Custom CSS, Google Analytics, Contact Form 7",
     images: [
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+9+Image+1",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+9+Image+2",
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+9+Image+3",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+9+Image+4"
+      "/projects/forcemech/forcemech-cover.webp",
+      "/projects/forcemech/forcemech-image-2.webp",
+      "/projects/forcemech/forcemech-image-3.webp",
+      "/projects/forcemech/forcemech-image-4.webp"
     ],
     projectLink: "https://corporate.example.com",
     githubLink: "",
-    description: "Professional corporate website featuring custom design elements, comprehensive content management system, SEO optimization strategies, multi-language support, employee portal integration, investor relations section, press release management, career opportunities showcase, client testimonials, service portfolio presentation, contact management system, and enterprise-level security measures for business growth."
+    description: ""
   },
   {
     id: 10,
@@ -141,14 +141,14 @@ export const allProjects = [
     category: ["Wordpress", "React Js", "Java"],
     technologies: "React Native, Java Spring Security, Oracle Database, Microservices, Kubernetes",
     images: [
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+10+Image+1",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+10+Image+2",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+10+Image+3",
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+10+Image+4"
+      "/projects/wellgisticshealth/wellgisticshealth-cover.webp",
+      "/projects/wellgisticshealth/wellgisticshealth-image-2.webp",
+      "/projects/wellgisticshealth/wellgisticshealth-image-3.webp",
+      "/projects/wellgisticshealth/wellgisticshealth-image-4.webp"
     ],
     projectLink: "https://banking.example.com",
     githubLink: "https://github.com/banking-app",
-    description: "Secure mobile banking application with advanced transaction management, real-time account monitoring, fund transfer capabilities, bill payment integration, investment portfolio tracking, loan application processing, customer support chat, biometric authentication, spending analytics, budget planning tools, financial goal setting, and multi-layer security protocols for safe banking."
+    description: ""
   },
   {
     id: 11,
@@ -156,14 +156,14 @@ export const allProjects = [
     category: ["React Js", "Java"],
     technologies: "Java EE, JPA/Hibernate, PostgreSQL, Apache Maven, JUnit Testing",
     images: [
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+11+Image+1",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+11+Image+2",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+11+Image+3",
-      "https://via.placeholder.com/1920x1080/84cc16/ffffff?text=Project+11+Image+4"
+      "/projects/bigblueinnovations/bigblueinnovations-cover.webp",
+      "/projects/bigblueinnovations/bigblueinnovations-image-2.webp",
+      "/projects/bigblueinnovations/bigblueinnovations-image-3.webp",
+      "/projects/bigblueinnovations/bigblueinnovations-image-4.webp"
     ],
     projectLink: "",
     githubLink: "https://github.com/inventory-system",
-    description: "Enterprise inventory management system with barcode scanning capabilities, real-time stock tracking, automated reorder notifications, supplier management, multi-warehouse support, comprehensive reporting tools, integration with accounting systems, mobile accessibility, batch processing, expiration date monitoring, cost analysis features, and scalable database architecture for growing businesses."
+    description: ""
   },
   {
     id: 12,
@@ -171,10 +171,10 @@ export const allProjects = [
     category: ["Wordpress", "React Js"],
     technologies: "WordPress, React.js, REST API, Redis Caching, Cloudflare CDN",
     images: [
-      "https://via.placeholder.com/1920x1080/22c55e/ffffff?text=Project+12+Image+1",
-      "https://via.placeholder.com/1920x1080/6366f1/ffffff?text=Project+12+Image+2",
-      "https://via.placeholder.com/1920x1080/3b82f6/ffffff?text=Project+12+Image+3",
-      "https://via.placeholder.com/1920x1080/38bdf8/ffffff?text=Project+12+Image+4"
+      "/projects/esspi/esspi-cover.webp",
+      "/projects/esspi/esspi-image-2.webp",
+      "/projects/esspi/esspi-image-3.webp",
+      "/projects/esspi/esspi-image-4.webp"
     ],
     projectLink: "https://news.example.com",
     githubLink: "https://github.com/news-portal",

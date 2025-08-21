@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import EasyNav from '../components/EasyNav';
 import SimpleHeroSection from '../components/SimpleHeroSection';
 
+
 const About = () => {
   // Define navigation items for your portfolio
   const homeNavItems = [
@@ -18,6 +19,8 @@ const About = () => {
   ];
 
   return (
+
+    <>
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Make sure each component receives and uses the id prop */}
       <div id="header">
@@ -51,6 +54,7 @@ const About = () => {
       {/* EasyNav Component with navigation items */}
       <EasyNav navItems={homeNavItems} />
     </div>
+    </>
   );
 };
 

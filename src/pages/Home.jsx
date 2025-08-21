@@ -18,6 +18,7 @@ const Home = () => {
   ];
 
   return (
+    <>
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Make sure each component receives and uses the id prop */}
       <div id="header">
@@ -47,6 +48,7 @@ const Home = () => {
       {/* EasyNav Component with navigation items */}
       <EasyNav navItems={homeNavItems} />
     </div>
+    </>
   );
 };
 
