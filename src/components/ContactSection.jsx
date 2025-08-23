@@ -1,17 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Phone, CheckCircle, AlertCircle, Send } from 'lucide-react';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
-  const captchaRef = useRef();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Clear status when user starts typing
     if (status.message) {
       setStatus({ type: '', message: '' });
     }
@@ -19,23 +16,9 @@ const ContactSection = () => {
 
   const handleCaptchaVerify = (token) => {
     setCaptchaToken(token);
-    // Clear any existing error status when captcha is verified
     if (status.type === 'error') {
       setStatus({ type: '', message: '' });
     }
-  };
-
-  const handleCaptchaExpire = () => {
-    setCaptchaToken(null);
-  };
-
-  const handleCaptchaError = (err) => {
-    console.error('hCaptcha Error:', err);
-    setCaptchaToken(null);
-    setStatus({ 
-      type: 'error', 
-      message: 'Captcha verification failed. Please try again.' 
-    });
   };
 
   const validateForm = () => {
@@ -59,16 +42,10 @@ const ContactSection = () => {
     }
 
     setIsLoading(true);
-    setStatus({ type: 'loading', message: 'Connecting to server...' });
+    setStatus({ type: 'loading', message: 'Sending your message...' });
 
     try {
-      console.log('Attempting to send message to server...');
-      console.log('Form data:', { 
-        name: form.name, 
-        email: form.email, 
-        message: form.message,
-        captchaToken: captchaToken 
-      });
+      console.log('Sending to:', 'https://hasanweb-backend1.onrender.com/send');
       
       const response = await fetch('https://hasanweb-backend1.onrender.com/send', {
         method: 'POST',
@@ -84,14 +61,15 @@ const ContactSection = () => {
       });
 
       console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
 
       if (!response.ok) {
-        throw new Error(`Server responded with status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Server error response:', errorText);
+        throw new Error(`Server error ${response.status}: ${errorText}`);
       }
 
       const data = await response.json();
-      console.log('Response data:', data);
+      console.log('Success response:', data);
 
       if (data.success) {
         setStatus({ 
@@ -100,29 +78,20 @@ const ContactSection = () => {
         });
         setForm({ name: '', email: '', message: '' });
         setCaptchaToken(null);
-        // Reset the captcha
-        if (captchaRef.current) {
-          captchaRef.current.resetCaptcha();
-        }
       } else {
         throw new Error(data.message || 'Server returned unsuccessful response');
       }
     } catch (error) {
       console.error('Detailed error:', error);
       
-      // Handle different types of errors with more specific messages
       let errorMessage = 'Failed to send message. ';
       
       if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-        errorMessage += 'Cannot connect to server. Make sure your Node.js server is running on port 5000.';
-      } else if (error.message.includes('CORS')) {
-        errorMessage += 'CORS error. Check if your server has CORS enabled.';
-      } else if (error.message.includes('Server responded with status')) {
-        errorMessage += `Server error (${error.message}). Check server logs for details.`;
-      } else if (error.message.includes('NetworkError')) {
-        errorMessage += 'Network connection error. Please check your internet connection.';
+        errorMessage += 'Network connection error. Please check your internet connection and try again.';
+      } else if (error.message.includes('Server error')) {
+        errorMessage += error.message;
       } else {
-        errorMessage += `Error: ${error.message}. Please contact me directly at sulaimanhasanevan@gmail.com`;
+        errorMessage += `Error: ${error.message}`;
       }
       
       setStatus({ 
@@ -130,11 +99,7 @@ const ContactSection = () => {
         message: errorMessage
       });
 
-      // Reset captcha on error
       setCaptchaToken(null);
-      if (captchaRef.current) {
-        captchaRef.current.resetCaptcha();
-      }
     } finally {
       setIsLoading(false);
     }
@@ -261,21 +226,27 @@ const ContactSection = () => {
               ></textarea>
             </div>
             
-            {/* hCaptcha */}
+            {/* Simple Captcha Placeholder - Replace with actual hCaptcha in your real code */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Security Verification *
               </label>
-              <div className="flex justify-center">
-                <HCaptcha
-                  ref={captchaRef}
-                  sitekey="95f0f6f4-0a9c-4bbc-b9d6-9296830ebe52"
-                  onVerify={handleCaptchaVerify}
-                  onExpire={handleCaptchaExpire}
-                  onError={handleCaptchaError}
-                  theme="dark"
-                />
+              <div className="flex justify-center p-4 bg-gray-700 rounded-lg border-2 border-dashed border-gray-600">
+                <button
+                  type="button"
+                  onClick={() => setCaptchaToken(captchaToken ? null : 'demo-token')}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    captchaToken 
+                      ? 'bg-green-600 text-white' 
+                      : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
+                  }`}
+                >
+                  {captchaToken ? '✓ Verified' : 'Click to verify'}
+                </button>
               </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Replace this with actual hCaptcha component in your real implementation
+              </p>
             </div>
             
             <button
