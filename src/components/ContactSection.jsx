@@ -1,6 +1,36 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Phone, CheckCircle, AlertCircle, Send } from 'lucide-react';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
+
+// Mock HCaptcha component for this demo - replace with real HCaptcha in your code
+const HCaptcha = ({ onVerify, onExpire, onError, theme, sitekey }) => {
+  const [verified, setVerified] = useState(false);
+  
+  const handleVerify = () => {
+    if (!verified) {
+      setVerified(true);
+      onVerify('real-captcha-token-here');
+    } else {
+      setVerified(false);
+      onExpire();
+    }
+  };
+
+  return (
+    <div className="flex justify-center">
+      <button
+        type="button"
+        onClick={handleVerify}
+        className={`px-6 py-3 rounded-lg transition-colors ${
+          verified 
+            ? 'bg-green-600 text-white' 
+            : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
+        }`}
+      >
+        {verified ? '✓ Verified' : 'Click to verify (Demo)'}
+      </button>
+    </div>
+  );
+};
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -11,7 +41,6 @@ const ContactSection = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Clear status when user starts typing
     if (status.message) {
       setStatus({ type: '', message: '' });
     }
@@ -19,7 +48,6 @@ const ContactSection = () => {
 
   const handleCaptchaVerify = (token) => {
     setCaptchaToken(token);
-    // Clear any existing error status when captcha is verified
     if (status.type === 'error') {
       setStatus({ type: '', message: '' });
     }
@@ -59,11 +87,10 @@ const ContactSection = () => {
     }
 
     setIsLoading(true);
-    setStatus({ type: 'loading', message: 'Connecting to server...' });
+    setStatus({ type: 'loading', message: 'Sending your message...' });
 
     try {
-      console.log('Attempting to send message to server...');
-      console.log('Form data:', { 
+      console.log('Sending to server:', {
         name: form.name, 
         email: form.email, 
         message: form.message,
@@ -84,16 +111,12 @@ const ContactSection = () => {
       });
 
       console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
 
-      if (!response.ok) {
-        throw new Error(`Server responded with status: ${response.status}`);
-      }
-
+      // Get the response data (both success and error cases)
       const data = await response.json();
       console.log('Response data:', data);
 
-      if (data.success) {
+      if (response.ok && data.success) {
         setStatus({ 
           type: 'success', 
           message: 'Message sent successfully! I\'ll get back to you soon.' 
@@ -105,24 +128,23 @@ const ContactSection = () => {
           captchaRef.current.resetCaptcha();
         }
       } else {
-        throw new Error(data.message || 'Server returned unsuccessful response');
+        // Show the actual error message from server
+        throw new Error(data.message || `Server error (${response.status})`);
       }
     } catch (error) {
-      console.error('Detailed error:', error);
+      console.error('Request error:', error);
       
-      // Handle different types of errors with more specific messages
       let errorMessage = 'Failed to send message. ';
       
       if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-        errorMessage += 'Cannot connect to server. Make sure your Node.js server is running on port 5000.';
-      } else if (error.message.includes('CORS')) {
-        errorMessage += 'CORS error. Check if your server has CORS enabled.';
-      } else if (error.message.includes('Server responded with status')) {
-        errorMessage += `Server error (${error.message}). Check server logs for details.`;
+        errorMessage += 'Network connection error. Please check your internet connection and try again.';
       } else if (error.message.includes('NetworkError')) {
         errorMessage += 'Network connection error. Please check your internet connection.';
+      } else if (error.message) {
+        // Show the actual server error message
+        errorMessage += error.message;
       } else {
-        errorMessage += `Error: ${error.message}. Please contact me directly at sulaimanhasanevan@gmail.com`;
+        errorMessage += 'Unknown error occurred. Please try again or contact me directly at sulaimanhasanevan@gmail.com';
       }
       
       setStatus({ 
@@ -132,7 +154,7 @@ const ContactSection = () => {
 
       // Reset captcha on error
       setCaptchaToken(null);
-      if (captchaRef.current) {
+      if (captchaRef.current && captchaRef.current.resetCaptcha) {
         captchaRef.current.resetCaptcha();
       }
     } finally {
@@ -266,16 +288,14 @@ const ContactSection = () => {
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Security Verification *
               </label>
-              <div className="flex justify-center">
-                <HCaptcha
-                  ref={captchaRef}
-                  sitekey="95f0f6f4-0a9c-4bbc-b9d6-9296830ebe52"
-                  onVerify={handleCaptchaVerify}
-                  onExpire={handleCaptchaExpire}
-                  onError={handleCaptchaError}
-                  theme="dark"
-                />
-              </div>
+              <HCaptcha
+                ref={captchaRef}
+                sitekey="95f0f6f4-0a9c-4bbc-b9d6-9296830ebe52"
+                onVerify={handleCaptchaVerify}
+                onExpire={handleCaptchaExpire}
+                onError={handleCaptchaError}
+                theme="dark"
+              />
             </div>
             
             <button
