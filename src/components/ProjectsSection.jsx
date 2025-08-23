@@ -227,10 +227,10 @@ const ProjectsSection = () => {
         </div>
 
         <div className="text-center mt-12">
-          <button className="bg-lime-500 hover:bg-lime-400 text-gray-900 px-8 py-3 rounded-lg transition-colors font-semibold text-lg inline-flex items-center">
-            See More Projects
-            <ArrowRight size={20} className="ml-2" />
-          </button>
+<a href="/projects#projects" className="bg-lime-500 hover:bg-lime-400 text-gray-900 px-8 py-3 rounded-lg transition-colors font-semibold text-lg inline-flex items-center">
+  See More Projects
+  <ArrowRight sizerum size={20} className="ml-2" />
+</a>
         </div>
       </div>
     </section>
