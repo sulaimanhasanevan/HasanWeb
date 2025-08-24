@@ -8,7 +8,8 @@ const HCaptcha = ({ onVerify, onExpire, onError, theme, sitekey }) => {
   const handleVerify = () => {
     if (!verified) {
       setVerified(true);
-      onVerify('real-captcha-token-here');
+      // Use a test token that your server recognizes
+      onVerify('test-token-123');
     } else {
       setVerified(false);
       onExpire();
@@ -37,6 +38,7 @@ const ContactSection = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
+  const [debugInfo, setDebugInfo] = useState('');
   const captchaRef = useRef();
 
   const handleChange = (e) => {
@@ -48,6 +50,7 @@ const ContactSection = () => {
 
   const handleCaptchaVerify = (token) => {
     setCaptchaToken(token);
+    setDebugInfo(prev => prev + `\n✓ CAPTCHA verified with token: ${token}`);
     if (status.type === 'error') {
       setStatus({ type: '', message: '' });
     }
@@ -55,11 +58,13 @@ const ContactSection = () => {
 
   const handleCaptchaExpire = () => {
     setCaptchaToken(null);
+    setDebugInfo(prev => prev + '\n⚠ CAPTCHA expired');
   };
 
   const handleCaptchaError = (err) => {
     console.error('hCaptcha Error:', err);
     setCaptchaToken(null);
+    setDebugInfo(prev => prev + `\n❌ CAPTCHA error: ${err}`);
     setStatus({ 
       type: 'error', 
       message: 'Captcha verification failed. Please try again.' 
@@ -79,6 +84,25 @@ const ContactSection = () => {
     return null;
   };
 
+  const testServerConnection = async () => {
+    try {
+      setDebugInfo('🔍 Testing server connection...\n');
+      
+      // Test 1: Check if server is running
+      const healthResponse = await fetch('https://hasanweb-backend1.onrender.com/health');
+      const healthData = await healthResponse.json();
+      setDebugInfo(prev => prev + `✓ Server health check: ${JSON.stringify(healthData)}\n`);
+
+      // Test 2: Check CORS and configuration
+      const testResponse = await fetch('https://hasanweb-backend1.onrender.com/test');
+      const testData = await testResponse.json();
+      setDebugInfo(prev => prev + `✓ Server config: ${JSON.stringify(testData)}\n`);
+
+    } catch (error) {
+      setDebugInfo(prev => prev + `❌ Server test failed: ${error.message}\n`);
+    }
+  };
+
   const handleSubmit = async () => {
     const validationError = validateForm();
     if (validationError) {
@@ -88,60 +112,77 @@ const ContactSection = () => {
 
     setIsLoading(true);
     setStatus({ type: 'loading', message: 'Sending your message...' });
+    setDebugInfo('🚀 Starting form submission...\n');
+
+    const requestData = {
+      name: form.name,
+      email: form.email,
+      message: form.message,
+      captchaToken: captchaToken
+    };
+
+    setDebugInfo(prev => prev + `📤 Request data: ${JSON.stringify(requestData, null, 2)}\n`);
 
     try {
-      console.log('Sending to server:', {
-        name: form.name, 
-        email: form.email, 
-        message: form.message,
-        captchaToken: captchaToken 
-      });
-      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch('https://hasanweb-backend1.onrender.com/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          captchaToken: captchaToken
-        })
+        body: JSON.stringify(requestData),
+        signal: controller.signal
       });
 
-      console.log('Response status:', response.status);
+      clearTimeout(timeoutId);
 
-      // Get the response data (both success and error cases)
-      const data = await response.json();
-      console.log('Response data:', data);
+      setDebugInfo(prev => prev + `📥 Response status: ${response.status} ${response.statusText}\n`);
+      setDebugInfo(prev => prev + `📥 Response headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()))}\n`);
 
-      if (response.ok && data.success) {
+      let responseData;
+      const contentType = response.headers.get('content-type');
+      
+      if (contentType && contentType.includes('application/json')) {
+        responseData = await response.json();
+      } else {
+        const textResponse = await response.text();
+        setDebugInfo(prev => prev + `⚠ Non-JSON response: ${textResponse}\n`);
+        throw new Error(`Server returned non-JSON response: ${textResponse}`);
+      }
+
+      setDebugInfo(prev => prev + `📥 Response data: ${JSON.stringify(responseData, null, 2)}\n`);
+
+      if (response.ok && responseData.success) {
         setStatus({ 
           type: 'success', 
           message: 'Message sent successfully! I\'ll get back to you soon.' 
         });
         setForm({ name: '', email: '', message: '' });
         setCaptchaToken(null);
+        setDebugInfo(prev => prev + '✅ Form submission successful!\n');
+        
         // Reset the captcha
-        if (captchaRef.current) {
+        if (captchaRef.current && captchaRef.current.resetCaptcha) {
           captchaRef.current.resetCaptcha();
         }
       } else {
-        // Show the actual error message from server
-        throw new Error(data.message || `Server error (${response.status})`);
+        throw new Error(responseData.message || `Server error (${response.status}): ${response.statusText}`);
       }
     } catch (error) {
-      console.error('Request error:', error);
+      setDebugInfo(prev => prev + `❌ Request error: ${error.name} - ${error.message}\n`);
       
       let errorMessage = 'Failed to send message. ';
       
-      if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+      if (error.name === 'AbortError') {
+        errorMessage += 'Request timed out after 30 seconds. The server might be slow to respond.';
+      } else if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
         errorMessage += 'Network connection error. Please check your internet connection and try again.';
       } else if (error.message.includes('NetworkError')) {
         errorMessage += 'Network connection error. Please check your internet connection.';
       } else if (error.message) {
-        // Show the actual server error message
         errorMessage += error.message;
       } else {
         errorMessage += 'Unknown error occurred. Please try again or contact me directly at sulaimanhasanevan@gmail.com';
@@ -232,6 +273,22 @@ const ContactSection = () => {
                 >
                   @sulaimane
                 </a>
+              </div>
+            </div>
+
+            {/* Debug Section */}
+            <div className="bg-gray-900 p-4 rounded-lg">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-100">Debug Console</h3>
+                <button
+                  onClick={testServerConnection}
+                  className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-500"
+                >
+                  Test Server
+                </button>
+              </div>
+              <div className="bg-black p-3 rounded font-mono text-xs text-green-400 max-h-48 overflow-y-auto">
+                {debugInfo || 'Debug info will appear here...'}
               </div>
             </div>
           </div>
