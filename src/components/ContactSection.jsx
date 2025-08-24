@@ -264,21 +264,14 @@ const ContactSection = () => {
                 Security Verification *
               </label>
               <div className="flex justify-start">
-                {hcaptchaLoaded ? (
-                  <div
-                    ref={captchaRef}
-                    className="h-captcha"
-                    data-sitekey="95f0f6f4-0a9c-4bbc-b9d6-9296830ebe52"
-                    data-theme="dark"
-                    data-callback="handleCaptchaVerify"
-                    data-expired-callback="handleCaptchaExpire"
-                    data-error-callback="handleCaptchaError"
-                  ></div>
-                ) : (
-                  <div className="bg-gray-700 border border-gray-600 rounded p-4 animate-pulse">
-                    <div className="text-gray-400">Loading security verification...</div>
-                  </div>
-                )}
+                <HCaptcha
+                  ref={captchaRef}
+                  sitekey="95f0f6f4-0a9c-4bbc-b9d6-9296830ebe52"
+                  onVerify={handleCaptchaVerify}
+                  onExpire={handleCaptchaExpire}
+                  onError={handleCaptchaError}
+                  theme="dark"
+                />
               </div>
             </div>
             
@@ -329,39 +322,8 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Global callback functions for hCaptcha */}
-      <script dangerouslySetInnerHTML={{
-        __html: `
-          window.handleCaptchaVerify = function(token) {
-            // This will be handled by the React component
-            if (window.captchaVerifyCallback) {
-              window.captchaVerifyCallback(token);
-            }
-          };
-          
-          window.handleCaptchaExpire = function() {
-            if (window.captchaExpireCallback) {
-              window.captchaExpireCallback();
-            }
-          };
-          
-          window.handleCaptchaError = function(err) {
-            if (window.captchaErrorCallback) {
-              window.captchaErrorCallback(err);
-            }
-          };
-        `
-      }} />
     </section>
   );
 };
-
-// Set up global callbacks
-if (typeof window !== 'undefined') {
-  window.captchaVerifyCallback = null;
-  window.captchaExpireCallback = null;
-  window.captchaErrorCallback = null;
-}
 
 export default ContactSection;
