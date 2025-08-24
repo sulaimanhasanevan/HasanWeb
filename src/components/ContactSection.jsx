@@ -1,17 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Phone, CheckCircle, AlertCircle, Send } from 'lucide-react';
 
-// Real HCaptcha component - install with: npm install @hcaptcha/react-hcaptcha
-// import HCaptcha from '@hcaptcha/react-hcaptcha';
-
-// For demo purposes, this simulates the real HCaptcha behavior
+// Mock HCaptcha component for this demo - replace with real HCaptcha in your code
 const HCaptcha = ({ onVerify, onExpire, onError, theme, sitekey }) => {
   const [verified, setVerified] = useState(false);
   
   const handleVerify = () => {
     if (!verified) {
       setVerified(true);
-      // Use test token that your server accepts
+      // Use a test token that your server recognizes
       onVerify('test-token-123');
     } else {
       setVerified(false);
@@ -20,7 +17,7 @@ const HCaptcha = ({ onVerify, onExpire, onError, theme, sitekey }) => {
   };
 
   return (
-    <div className="flex justify-start">
+    <div className="flex justify-center">
       <button
         type="button"
         onClick={handleVerify}
@@ -30,7 +27,7 @@ const HCaptcha = ({ onVerify, onExpire, onError, theme, sitekey }) => {
             : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
         }`}
       >
-        {verified ? '✓ Verified' : 'Click to verify (HCaptcha)'}
+        {verified ? '✓ Verified' : 'Click to verify (Demo)'}
       </button>
     </div>
   );
@@ -41,6 +38,7 @@ const ContactSection = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
+  const [debugInfo, setDebugInfo] = useState('');
   const captchaRef = useRef();
 
   const handleChange = (e) => {
@@ -52,6 +50,7 @@ const ContactSection = () => {
 
   const handleCaptchaVerify = (token) => {
     setCaptchaToken(token);
+    setDebugInfo(prev => prev + `\n✓ CAPTCHA verified with token: ${token}`);
     if (status.type === 'error') {
       setStatus({ type: '', message: '' });
     }
@@ -59,11 +58,13 @@ const ContactSection = () => {
 
   const handleCaptchaExpire = () => {
     setCaptchaToken(null);
+    setDebugInfo(prev => prev + '\n⚠ CAPTCHA expired');
   };
 
   const handleCaptchaError = (err) => {
     console.error('hCaptcha Error:', err);
     setCaptchaToken(null);
+    setDebugInfo(prev => prev + `\n❌ CAPTCHA error: ${err}`);
     setStatus({ 
       type: 'error', 
       message: 'Captcha verification failed. Please try again.' 
@@ -83,6 +84,25 @@ const ContactSection = () => {
     return null;
   };
 
+  const testServerConnection = async () => {
+    try {
+      setDebugInfo('🔍 Testing server connection...\n');
+      
+      // Test 1: Check if server is running
+      const healthResponse = await fetch('https://hasanweb-backend1.onrender.com/health');
+      const healthData = await healthResponse.json();
+      setDebugInfo(prev => prev + `✓ Server health check: ${JSON.stringify(healthData)}\n`);
+
+      // Test 2: Check CORS and configuration
+      const testResponse = await fetch('https://hasanweb-backend1.onrender.com/test');
+      const testData = await testResponse.json();
+      setDebugInfo(prev => prev + `✓ Server config: ${JSON.stringify(testData)}\n`);
+
+    } catch (error) {
+      setDebugInfo(prev => prev + `❌ Server test failed: ${error.message}\n`);
+    }
+  };
+
   const handleSubmit = async () => {
     const validationError = validateForm();
     if (validationError) {
@@ -92,6 +112,7 @@ const ContactSection = () => {
 
     setIsLoading(true);
     setStatus({ type: 'loading', message: 'Sending your message...' });
+    setDebugInfo('🚀 Starting form submission...\n');
 
     const requestData = {
       name: form.name,
@@ -99,6 +120,8 @@ const ContactSection = () => {
       message: form.message,
       captchaToken: captchaToken
     };
+
+    setDebugInfo(prev => prev + `📤 Request data: ${JSON.stringify(requestData, null, 2)}\n`);
 
     try {
       const controller = new AbortController();
@@ -116,6 +139,9 @@ const ContactSection = () => {
 
       clearTimeout(timeoutId);
 
+      setDebugInfo(prev => prev + `📥 Response status: ${response.status} ${response.statusText}\n`);
+      setDebugInfo(prev => prev + `📥 Response headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()))}\n`);
+
       let responseData;
       const contentType = response.headers.get('content-type');
       
@@ -123,8 +149,11 @@ const ContactSection = () => {
         responseData = await response.json();
       } else {
         const textResponse = await response.text();
+        setDebugInfo(prev => prev + `⚠ Non-JSON response: ${textResponse}\n`);
         throw new Error(`Server returned non-JSON response: ${textResponse}`);
       }
+
+      setDebugInfo(prev => prev + `📥 Response data: ${JSON.stringify(responseData, null, 2)}\n`);
 
       if (response.ok && responseData.success) {
         setStatus({ 
@@ -133,6 +162,7 @@ const ContactSection = () => {
         });
         setForm({ name: '', email: '', message: '' });
         setCaptchaToken(null);
+        setDebugInfo(prev => prev + '✅ Form submission successful!\n');
         
         // Reset the captcha
         if (captchaRef.current && captchaRef.current.resetCaptcha) {
@@ -142,6 +172,8 @@ const ContactSection = () => {
         throw new Error(responseData.message || `Server error (${response.status}): ${response.statusText}`);
       }
     } catch (error) {
+      setDebugInfo(prev => prev + `❌ Request error: ${error.name} - ${error.message}\n`);
+      
       let errorMessage = 'Failed to send message. ';
       
       if (error.name === 'AbortError') {
@@ -241,6 +273,22 @@ const ContactSection = () => {
                 >
                   @sulaimane
                 </a>
+              </div>
+            </div>
+
+            {/* Debug Section */}
+            <div className="bg-gray-900 p-4 rounded-lg">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-100">Debug Console</h3>
+                <button
+                  onClick={testServerConnection}
+                  className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-500"
+                >
+                  Test Server
+                </button>
+              </div>
+              <div className="bg-black p-3 rounded font-mono text-xs text-green-400 max-h-48 overflow-y-auto">
+                {debugInfo || 'Debug info will appear here...'}
               </div>
             </div>
           </div>
