@@ -3,6 +3,7 @@ import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import EasyNav from '../components/EasyNav';
 import SimpleHeroSection from '../components/SimpleHeroSection';
+import BookMeeting from '../components/BookMeeting'
 
 
 const Contact = () => {
@@ -11,7 +12,7 @@ const Contact = () => {
     { name: 'Header', id: 'header', color: '#00bcff' },
     { name: 'Hero', id: 'hero', color: '#00bcff' },
     { name: 'About', id: 'about', color: '#00bcff' },
-    { name: 'Projects', id: 'projects', color: '#00bcff' },
+    { name: 'Shedule meeting', id: 'Meeting', color: '#00bcff' },
     { name: 'Contact', id: 'contact', color: '#00bcff' },
     { name: 'Footer', id: 'footer', color: '#00bcff' }
   ];
@@ -34,7 +35,9 @@ const Contact = () => {
       <div id="contact">
         <ContactSection />
       </div>
-      
+      <div id="Meeting">
+       <BookMeeting />
+      </div>
       <div id="footer">
         <Footer />
       </div>
