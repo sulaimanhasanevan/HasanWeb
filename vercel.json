@@ -4,7 +4,8 @@
   ],
   "build": {
     "env": {
-      "ROLLUP_SKIP_NATIVE": "true"
+"ROLLUP_SKIP_NATIVE": "true",
+    "FORCE_JAVASCRIPT_ROLLUP": "true"
     }
   }
 }
