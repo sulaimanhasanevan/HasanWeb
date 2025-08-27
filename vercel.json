@@ -2,10 +2,8 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "build": {
-    "env": {
-"ROLLUP_SKIP_NATIVE": "true",
-    "FORCE_JAVASCRIPT_ROLLUP": "true"
-    }
+   "buildCommand": "npm install --include=optional && npm run build",
+  "env": {
+    "ROLLUP_SKIP_NATIVE": "true"
   }
 }
