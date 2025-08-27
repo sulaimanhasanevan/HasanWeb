@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, User, Mail, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Mock data for booked slots (in UTC ISO strings)
-const mockBookedSlots = [
-  '2025-08-28T06:00:00.000Z', // 12:00 PM Bangladesh time on Aug 28
-  '2025-08-28T08:00:00.000Z', // 2:00 PM Bangladesh time on Aug 28
-  '2025-08-29T07:00:00.000Z', // 1:00 PM Bangladesh time on Aug 29
-];
-
 const BookMeeting = () => {
   // Component state
   const [selectedDate, setSelectedDate] = useState(null);
-  const [timezone, setTimezone] = useState('UTC'); // Default to UTC
+  const [timezone, setTimezone] = useState('UTC');
   const [slots, setSlots] = useState([]);
-  const [bookedSlots, setBookedSlots] = useState(mockBookedSlots);
+  const [bookedSlots, setBookedSlots] = useState([]);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -21,27 +14,50 @@ const BookMeeting = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState(null);
 
-  // Limited timezone options - only UTC, PDT, EST
+  // Backend API URL
+  const API_BASE_URL = 'https://hasanweb-calender.onrender.com/api';
+
+  // Limited timezone options
   const timezoneOptions = [
     { value: 'UTC', label: 'UTC' },
     { value: 'America/Los_Angeles', label: 'PDT' },
     { value: 'America/New_York', label: 'EST' },
   ];
 
+  // Fetch booked slots from backend
+  const fetchBookedSlots = async (startDate, endDate) => {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/booked-slots?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        setBookedSlots(data.bookedSlots || []);
+      } else {
+        console.error('Failed to fetch booked slots');
+        setBookedSlots([]);
+      }
+    } catch (error) {
+      console.error('Error fetching booked slots:', error);
+      setBookedSlots([]);
+    }
+  };
+
   // Helper function to check if a day is available (Mon-Sat, minimum 2 days from today)
   const isDayAvailable = (date) => {
     const dayOfWeek = date.getDay();
     const today = new Date();
     const minDate = new Date(today);
-    minDate.setDate(today.getDate() + 2); // Minimum 2 days from today
+    minDate.setDate(today.getDate() + 2);
     minDate.setHours(0, 0, 0, 0);
     
-    return dayOfWeek >= 1 && dayOfWeek <= 6 && date >= minDate; // Monday = 1, Saturday = 6
+    return dayOfWeek >= 1 && dayOfWeek <= 6 && date >= minDate;
   };
 
   // Helper function to check if a time slot is in unavailable hours (4 AM to 12 PM Bangladesh time)
   const isUnavailableHour = (hour) => {
-    return hour >= 4 && hour < 12; // 4 AM to 12 PM (exclusive)
+    return hour >= 4 && hour < 12;
   };
 
   // Generate time slots for a given date in Bangladesh time
@@ -51,10 +67,8 @@ const BookMeeting = () => {
     const slots = [];
     const dateStr = date.toISOString().split('T')[0];
     
-    // Generate slots for 24 hours (0-23)
     for (let hour = 0; hour < 24; hour++) {
       const slotTime = new Date(`${dateStr}T${hour.toString().padStart(2, '0')}:00:00`);
-      // Convert to UTC for storage (Bangladesh is UTC+6)
       const utcTime = new Date(slotTime.getTime() - (6 * 60 * 60 * 1000));
       
       const isUnavailable = isUnavailableHour(hour);
@@ -119,12 +133,17 @@ const BookMeeting = () => {
   };
 
   // Handle date selection
-  const handleDateSelect = (date) => {
+  const handleDateSelect = async (date) => {
     if (isDayAvailable(date)) {
       setSelectedDate(date);
       setSelectedSlot(null);
       setSuccess(false);
       setError('');
+      
+      // Fetch booked slots for the selected month
+      const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+      const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      await fetchBookedSlots(startOfMonth, endOfMonth);
     }
   };
 
@@ -146,33 +165,42 @@ const BookMeeting = () => {
     setError('');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Add to booked slots
-      setBookedSlots(prev => [...prev, selectedSlot.startUTC]);
-      
-      // Reset form
-      setForm({ name: '', email: '', message: '' });
-      setSelectedSlot(null);
-      setSuccess(true);
-      
-      // Mock email sending
-      console.log('Emails would be sent:', {
-        toOwner: {
-          email: 'sulaimanhasanevan@gmail.com',
-          subject: `New Meeting: ${form.name}`,
-          content: `New meeting booked with ${form.name} (${form.email}) for ${formatDateDisplay(selectedDate)} at ${selectedSlot.displayTime} (${timezone}). Message: ${form.message}`
+      const response = await fetch(`${API_BASE_URL}/book-meeting`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        toClient: {
+        body: JSON.stringify({
+          name: form.name,
           email: form.email,
-          subject: 'Meeting Confirmation',
-          content: `Hello ${form.name}, your meeting is confirmed for ${formatDateDisplay(selectedDate)} at ${selectedSlot.displayTime} (${timezone}).`
-        }
+          message: form.message,
+          startTime: selectedSlot.startUTC,
+          timezone: timezone
+        }),
       });
 
+      const data = await response.json();
+
+      if (response.ok) {
+        // Add to booked slots locally
+        setBookedSlots(prev => [...prev, selectedSlot.startUTC]);
+        
+        // Reset form
+        setForm({ name: '', email: '', message: '' });
+        setSelectedSlot(null);
+        setSuccess(true);
+        
+        // Refresh booked slots
+        const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+        const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+        await fetchBookedSlots(startOfMonth, endOfMonth);
+      } else {
+        throw new Error(data.error || 'Failed to book meeting');
+      }
+
     } catch (err) {
-      setError('Failed to book meeting. Please try again.');
+      console.error('Booking error:', err);
+      setError(err.message || 'Failed to book meeting. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -186,12 +214,24 @@ const BookMeeting = () => {
     setError('');
   };
 
-  // Update slots when date or timezone changes
+  // Update slots when date, timezone, or booked slots change
   useEffect(() => {
     if (selectedDate) {
       setSlots(generateSlotsForDate(selectedDate));
     }
   }, [selectedDate, timezone, bookedSlots]);
+
+  // Fetch initial booked slots for current month
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      await fetchBookedSlots(startOfMonth, endOfMonth);
+    };
+    
+    fetchInitialData();
+  }, []);
 
   const calendarDays = generateCalendarDays();
   const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -206,7 +246,7 @@ const BookMeeting = () => {
           <p className="text-[#9ca3af] text-lg">Book an hour meeting session</p>
         </div>
 
-        {/* Two Column Layout - 60% Calendar/Times, 40% Booking Form */}
+        {/* Two Column Layout */}
         <div className="flex">
           {/* Left Column: Calendar or Time Selection (60%) */}
           <div className="w-[60%] pr-4">
@@ -217,7 +257,13 @@ const BookMeeting = () => {
                 {/* Calendar Header */}
                 <div className="flex items-center justify-between mb-6">
                   <button
-                    onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+                    onClick={async () => {
+                      const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1);
+                      setCurrentMonth(newMonth);
+                      const startOfMonth = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
+                      const endOfMonth = new Date(newMonth.getFullYear(), newMonth.getMonth() + 1, 0);
+                      await fetchBookedSlots(startOfMonth, endOfMonth);
+                    }}
                     className="p-2 hover:bg-[#0d0d0d] rounded-lg transition-colors text-[#e5e7eb]"
                   >
                     <ChevronLeft className="w-6 h-6" />
@@ -226,7 +272,13 @@ const BookMeeting = () => {
                     {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                   </h3>
                   <button
-                    onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+                    onClick={async () => {
+                      const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1);
+                      setCurrentMonth(newMonth);
+                      const startOfMonth = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
+                      const endOfMonth = new Date(newMonth.getFullYear(), newMonth.getMonth() + 1, 0);
+                      await fetchBookedSlots(startOfMonth, endOfMonth);
+                    }}
                     className="p-2 hover:bg-[#0d0d0d] rounded-lg transition-colors text-[#e5e7eb]"
                   >
                     <ChevronRight className="w-6 h-6" />
