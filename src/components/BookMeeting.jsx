@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, User, Mail, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, User, Mail, MessageCircle, ChevronLeft, ChevronRight, AlertCircle, CheckCircle } from 'lucide-react';
 
 const BookMeeting = () => {
   // Component state
@@ -13,6 +13,23 @@ const BookMeeting = () => {
   const [error, setError] = useState('');
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState(null);
+  
+  // Debug state
+  const [debugLogs, setDebugLogs] = useState([]);
+  const [showDebug, setShowDebug] = useState(true);
+
+  // Debug function
+  const addDebugLog = (message, type = 'info', data = null) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const logEntry = {
+      timestamp,
+      message,
+      type, // 'info', 'success', 'error', 'warning'
+      data: data ? JSON.stringify(data, null, 2) : null
+    };
+    setDebugLogs(prev => [...prev.slice(-9), logEntry]); // Keep last 10 logs
+    console.log(`[${timestamp}] ${type.toUpperCase()}: ${message}`, data || '');
+  };
 
   // Backend API URL
   const API_BASE_URL = 'https://hasanweb-calender.onrender.com/api';
@@ -22,24 +39,35 @@ const BookMeeting = () => {
     { value: 'UTC', label: 'UTC' },
     { value: 'America/Los_Angeles', label: 'PDT' },
     { value: 'America/New_York', label: 'EST' },
+    { value: 'Asia/Dhaka', label: 'Bangladesh Time (BD)' }
   ];
+
+  // Set default timezone to Bangladesh
+  useEffect(() => {
+    setTimezone('Asia/Dhaka');
+  }, []);
 
   // Fetch booked slots from backend
   const fetchBookedSlots = async (startDate, endDate) => {
     try {
+      addDebugLog('Fetching booked slots...', 'info');
       const response = await fetch(
         `${API_BASE_URL}/booked-slots?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
       );
       
+      addDebugLog(`API Response Status: ${response.status}`, 'info');
+      
       if (response.ok) {
         const data = await response.json();
+        addDebugLog(`Fetched ${data.bookedSlots?.length || 0} booked slots`, 'success', data);
         setBookedSlots(data.bookedSlots || []);
       } else {
-        console.error('Failed to fetch booked slots');
+        const errorText = await response.text();
+        addDebugLog('Failed to fetch booked slots', 'error', { status: response.status, error: errorText });
         setBookedSlots([]);
       }
     } catch (error) {
-      console.error('Error fetching booked slots:', error);
+      addDebugLog('Network error fetching booked slots', 'error', error.message);
       setBookedSlots([]);
     }
   };
@@ -52,7 +80,11 @@ const BookMeeting = () => {
     minDate.setDate(today.getDate() + 2);
     minDate.setHours(0, 0, 0, 0);
     
-    return dayOfWeek >= 1 && dayOfWeek <= 6 && date >= minDate;
+    const available = dayOfWeek >= 1 && dayOfWeek <= 6 && date >= minDate;
+    if (!available && dayOfWeek === 0) {
+      addDebugLog(`Date ${date.toDateString()} unavailable: Sunday`, 'warning');
+    }
+    return available;
   };
 
   // Helper function to check if a time slot is in unavailable hours (4 AM to 12 PM Bangladesh time)
@@ -62,14 +94,29 @@ const BookMeeting = () => {
 
   // Generate time slots for a given date in Bangladesh time
   const generateSlotsForDate = (date) => {
-    if (!date || !isDayAvailable(date)) return [];
+    if (!date || !isDayAvailable(date)) {
+      addDebugLog('Cannot generate slots for unavailable date', 'warning');
+      return [];
+    }
 
     const slots = [];
     const dateStr = date.toISOString().split('T')[0];
     
+    addDebugLog(`Generating slots for ${dateStr} in timezone ${timezone}`, 'info');
+    
     for (let hour = 0; hour < 24; hour++) {
+      // Create slot time in Bangladesh timezone first
       const slotTime = new Date(`${dateStr}T${hour.toString().padStart(2, '0')}:00:00`);
-      const utcTime = new Date(slotTime.getTime() - (6 * 60 * 60 * 1000));
+      
+      // Convert to UTC for backend storage
+      let utcTime;
+      if (timezone === 'Asia/Dhaka') {
+        // Bangladesh is UTC+6
+        utcTime = new Date(slotTime.getTime() - (6 * 60 * 60 * 1000));
+      } else {
+        // For other timezones, use as-is for now
+        utcTime = slotTime;
+      }
       
       const isUnavailable = isUnavailableHour(hour);
       const isBooked = bookedSlots.includes(utcTime.toISOString());
@@ -77,7 +124,7 @@ const BookMeeting = () => {
       
       slots.push({
         startUTC: utcTime.toISOString(),
-        displayTime: formatTimeInTimezone(utcTime, timezone),
+        displayTime: formatTimeInTimezone(slotTime, timezone),
         hour: hour,
         isUnavailable: isUnavailable,
         isBooked: isBooked,
@@ -86,12 +133,21 @@ const BookMeeting = () => {
       });
     }
 
+    addDebugLog(`Generated ${slots.length} slots, ${slots.filter(s => s.isSelectable).length} selectable`, 'success');
     return slots;
   };
 
   // Format time in a specific timezone
   const formatTimeInTimezone = (date, tz) => {
     try {
+      if (tz === 'Asia/Dhaka') {
+        // Handle Bangladesh timezone manually
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const period = hours >= 12 ? 'PM' : 'AM';
+        const displayHours = hours % 12 || 12;
+        return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+      }
       return new Intl.DateTimeFormat('en-US', {
         timeZone: tz,
         hour: 'numeric',
@@ -99,6 +155,7 @@ const BookMeeting = () => {
         hour12: true
       }).format(new Date(date));
     } catch (error) {
+      addDebugLog('Error formatting time', 'error', { date, tz, error: error.message });
       return new Date(date).toLocaleTimeString();
     }
   };
@@ -135,6 +192,7 @@ const BookMeeting = () => {
   // Handle date selection
   const handleDateSelect = async (date) => {
     if (isDayAvailable(date)) {
+      addDebugLog(`Date selected: ${date.toDateString()}`, 'info');
       setSelectedDate(date);
       setSelectedSlot(null);
       setSuccess(false);
@@ -144,25 +202,43 @@ const BookMeeting = () => {
       const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
       const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
       await fetchBookedSlots(startOfMonth, endOfMonth);
+    } else {
+      addDebugLog(`Date not available: ${date.toDateString()}`, 'warning');
     }
   };
 
   // Handle slot selection
   const handleSlotSelect = (slot) => {
     if (slot.isSelectable) {
+      addDebugLog(`Time slot selected: ${slot.displayTime} (UTC: ${slot.startUTC})`, 'info');
       setSelectedSlot(slot);
+    } else {
+      addDebugLog(`Slot not selectable: ${slot.displayTime}`, 'warning');
     }
   };
 
   // Handle form submission
   const handleSubmit = async () => {
     if (!selectedSlot || !form.name || !form.email) {
-      setError('Please fill in all required fields and select a time slot.');
+      const errorMsg = 'Please fill in all required fields and select a time slot.';
+      setError(errorMsg);
+      addDebugLog(errorMsg, 'error');
       return;
     }
 
+    addDebugLog('Starting booking submission...', 'info');
     setLoading(true);
     setError('');
+
+    const bookingData = {
+      name: form.name,
+      email: form.email,
+      message: form.message,
+      startTime: selectedSlot.startUTC,
+      timezone: timezone
+    };
+
+    addDebugLog('Booking data prepared', 'info', bookingData);
 
     try {
       const response = await fetch(`${API_BASE_URL}/book-meeting`, {
@@ -170,16 +246,13 @@ const BookMeeting = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          startTime: selectedSlot.startUTC,
-          timezone: timezone
-        }),
+        body: JSON.stringify(bookingData),
       });
 
+      addDebugLog(`Booking API response status: ${response.status}`, 'info');
+
       const data = await response.json();
+      addDebugLog('Booking API response received', 'info', data);
 
       if (response.ok) {
         // Add to booked slots locally
@@ -189,18 +262,22 @@ const BookMeeting = () => {
         setForm({ name: '', email: '', message: '' });
         setSelectedSlot(null);
         setSuccess(true);
+        addDebugLog('Booking successful!', 'success', data);
         
         // Refresh booked slots
         const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
         const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
         await fetchBookedSlots(startOfMonth, endOfMonth);
       } else {
-        throw new Error(data.error || 'Failed to book meeting');
+        const errorMsg = data.error || 'Failed to book meeting';
+        setError(errorMsg);
+        addDebugLog('Booking failed', 'error', data);
       }
 
     } catch (err) {
-      console.error('Booking error:', err);
-      setError(err.message || 'Failed to book meeting. Please try again.');
+      const errorMsg = 'Network error during booking. Please check your connection.';
+      setError(errorMsg);
+      addDebugLog('Network error during booking', 'error', err.message);
     } finally {
       setLoading(false);
     }
@@ -212,11 +289,13 @@ const BookMeeting = () => {
     setSelectedSlot(null);
     setSuccess(false);
     setError('');
+    addDebugLog('Returned to calendar view', 'info');
   };
 
   // Update slots when date, timezone, or booked slots change
   useEffect(() => {
     if (selectedDate) {
+      addDebugLog('Regenerating slots due to state change', 'info');
       setSlots(generateSlotsForDate(selectedDate));
     }
   }, [selectedDate, timezone, bookedSlots]);
@@ -224,6 +303,7 @@ const BookMeeting = () => {
   // Fetch initial booked slots for current month
   useEffect(() => {
     const fetchInitialData = async () => {
+      addDebugLog('Fetching initial data on component mount', 'info');
       const now = new Date();
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
       const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
@@ -245,6 +325,52 @@ const BookMeeting = () => {
           <h1 className="text-4xl font-bold text-[#e5e7eb] mb-4">Schedule A Meeting</h1>
           <p className="text-[#9ca3af] text-lg">Book an hour meeting session</p>
         </div>
+
+        {/* Debug Console */}
+        {showDebug && (
+          <div className="mb-6 bg-[#1f2937] border border-gray-700 rounded-xl p-4">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-sm font-semibold text-[#e5e7eb]">Debug Console</h3>
+              <button
+                onClick={() => setShowDebug(false)}
+                className="text-xs text-[#9ca3af] hover:text-[#e5e7eb] px-2 py-1 rounded"
+              >
+                Hide Debug
+              </button>
+            </div>
+            <div className="max-h-48 overflow-y-auto space-y-1 text-xs font-mono">
+              {debugLogs.map((log, index) => (
+                <div key={index} className={`flex gap-2 p-2 rounded ${
+                  log.type === 'error' ? 'bg-red-900/20 text-red-400' :
+                  log.type === 'success' ? 'bg-green-900/20 text-green-400' :
+                  log.type === 'warning' ? 'bg-yellow-900/20 text-yellow-400' :
+                  'bg-gray-800/50 text-gray-300'
+                }`}>
+                  <span className="text-[#9ca3af]">[{log.timestamp}]</span>
+                  <span>{log.message}</span>
+                  {log.data && (
+                    <details className="ml-2">
+                      <summary className="cursor-pointer text-[#60a5fa]">Data</summary>
+                      <pre className="mt-1 text-xs whitespace-pre-wrap text-[#9ca3af]">{log.data}</pre>
+                    </details>
+                  )}
+                </div>
+              ))}
+              {debugLogs.length === 0 && (
+                <div className="text-[#9ca3af] text-center py-4">No debug logs yet</div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {!showDebug && (
+          <button
+            onClick={() => setShowDebug(true)}
+            className="mb-4 text-xs text-[#60a5fa] hover:text-[#38bdf8] underline"
+          >
+            Show Debug Console
+          </button>
+        )}
 
         {/* Two Column Layout */}
         <div className="flex">
@@ -356,7 +482,10 @@ const BookMeeting = () => {
                   </label>
                   <select
                     value={timezone}
-                    onChange={(e) => setTimezone(e.target.value)}
+                    onChange={(e) => {
+                      setTimezone(e.target.value);
+                      addDebugLog(`Timezone changed to: ${e.target.value}`, 'info');
+                    }}
                     className="w-full bg-[#0d0d0d] border border-gray-600 rounded-lg px-4 py-3 text-[#e5e7eb] focus:ring-2 focus:ring-[#6366f1] focus:border-[#6366f1] transition-colors"
                   >
                     {timezoneOptions.map(tz => (
@@ -480,20 +609,24 @@ const BookMeeting = () => {
                     <strong className="text-[#6366f1]">Selected:</strong> {formatDateDisplay(selectedDate)} at {selectedSlot.displayTime}
                     <br />
                     <span className="text-xs text-[#9ca3af]">Timezone: {timezone}</span>
+                    <br />
+                    <span className="text-xs text-[#9ca3af]">UTC Time: {selectedSlot.startUTC}</span>
                   </p>
                 </div>
               )}
 
               {/* Error and Success Messages */}
               {error && (
-                <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 text-red-400 text-sm">
-                  ⚠️ {error}
+                <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 text-red-400 text-sm flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <div>{error}</div>
                 </div>
               )}
 
               {success && (
-                <div className="bg-green-900/30 border border-green-700 rounded-lg p-4 text-green-400 text-sm">
-                  ✅ Meeting booked successfully! Confirmation emails have been sent.
+                <div className="bg-green-900/30 border border-green-700 rounded-lg p-4 text-green-400 text-sm flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <div>Meeting booked successfully! Confirmation emails have been sent.</div>
                 </div>
               )}
 
