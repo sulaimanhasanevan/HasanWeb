@@ -6,18 +6,9 @@ const Experience = () => {
   const milestonesRef = useRef([]);
   
   const [experiences, setExperiences] = useState([
+    
     {
       id: 1,
-      company: "Yildiz Cloud Consultancy LLC",
-      place: "New York, United States",
-      location: "Remote",
-      type: "Freelancer",
-      startDate: "Jun 2025",
-      endDate: "Present",
-      description: "Remote freelance role handling QA and front-end tasks for client sites. Performed WordPress debugging, cross-browser testing, and performance tuning."
-    },
-    {
-      id: 2,
       company: "I.T For Less",
       place: "Chicago, Illinois, United States",
       location: "Remote",
@@ -27,7 +18,7 @@ const Experience = () => {
       description: "Full-time remote position customizing WordPress themes and plugin behavior. Developed and maintained WooCommerce stores with ACF and Elementor integration. Improved site structure, loading speed, and UX across multiple client projects."
     },
     {
-      id: 3,
+      id: 2,
       company: "Link1 Studio",
       place: "London, United Kingdom",
       location: "Remote",
@@ -37,7 +28,7 @@ const Experience = () => {
       description: "Freelance: Delivered two full websites (Pitpop.it, link1studios.com). Implemented custom themes with advanced animations using GSAP and ScrollTrigger."
     },
     {
-      id: 4,
+      id: 3,
       company: "AutoSmartSeller",
       place: "Surat, Gujarat, India",
       location: "Remote",
@@ -47,7 +38,7 @@ const Experience = () => {
       description: "Hourly freelance role focusing on troubleshooting and site customization. Created lightweight WordPress themes and tailored plugins based on client specs. Frequently worked with WooCommerce, CPTs, and Elementor Pro."
     },
     {
-      id: 5,
+      id: 4,
       company: "Videe Infotech",
       place: "Surat, Gujarat, India",
       location: "Remote",
@@ -57,7 +48,7 @@ const Experience = () => {
       description: "Part-time remote position developing fully responsive WordPress websites. Specialized in building themes from scratch and fixing CSS/JS issues."
     },
     {
-      id: 6,
+      id: 5,
       company: "Fiverr",
       place: "Dhaka, Bangladesh",
       location: "Remote",
