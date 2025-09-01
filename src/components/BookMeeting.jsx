@@ -45,13 +45,20 @@ const BookMeeting = () => {
   // Constants
   const API_BASE_URL = 'https://hasanweb-calender.onrender.com/api';
   
+
   const timezoneOptions = useMemo(() => [
-    { value: 'UTC', label: 'UTC' },
-    { value: 'America/Los_Angeles', label: 'PDT' },
-    { value: 'America/New_York', label: 'EST' },
-    { value: 'Asia/Dhaka', label: 'Bangladesh Time (BD)' }
+    { value: 'UTC', label: 'UTC+0' },
+    { value: 'America/Los_Angeles', label: 'PDT (UTC-7)' },
+    { value: 'America/New_York', label: 'EST (UTC-4)' },
+    { value: 'Europe/London', label: 'BST (UTC+1)' },
+    { value: 'Europe/Berlin', label: 'CEST (UTC+2)' },
+    { value: 'Asia/Dubai', label: 'GST (UTC+4)' },
+    { value: 'Asia/Kolkata', label: 'IST (UTC+5:30)' },
+    { value: 'Asia/Shanghai', label: 'CST (UTC+8)' },
+    { value: 'Asia/Tokyo', label: 'JST (UTC+9)' }
   ], []);
 
+  
   const monthNames = useMemo(() => [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
